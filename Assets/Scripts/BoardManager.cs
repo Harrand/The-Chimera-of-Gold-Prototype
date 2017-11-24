@@ -25,11 +25,10 @@ namespace Chimera
             }
         }
         public Count wallCount = new Count(1, 20);
-        public int columns = 21;                                         //Number of columns in our game board.
-        public int rows = 17;                                          //Lower and upper limit for our random number of walls per level.
-        public GameObject exit;                                         //Prefab to spawn for exit.
+        public int columns = 20;                                         //Number of columns in our game board.
+        public int rows = 19;                                          //Lower and upper limit for our random number of walls per level.
+
         public GameObject[] Tiles;                                 //Array of members
-        public GameObject Spaces;                                 //Array of members
         public GameObject Border;                                 //Array of members
 
 
@@ -55,7 +54,110 @@ namespace Chimera
             }
         }
 
-
+        bool tileCheck(int x, int y)
+        {
+            if (y == 0)
+            {
+                return true;
+            }
+            else if(y == 1)
+            {
+                if (x == 0 || x == columns)
+                    return true;
+                else
+                    return false;
+            }
+            else if(y == 2)
+            {
+                return true;
+            }
+            else if (y == 3 || y == 4)
+            {
+                if (x == 2 || x == 6 || x == 10 || x == 14 || x == 18)
+                    return true;
+                else
+                    return false;
+            }
+            else if (y == 5)
+            {
+                if (x >= 2 && x <= 18)
+                    return true;
+                else
+                    return false;
+            }
+            else if (y == 6)
+            {
+                if (x == 4 || x == 8 || x == 12 || x == 16)
+                    return true;
+                else
+                    return false;
+            }
+            else if (y == 7)
+            {
+                if (x >= 4 && x <= 16)
+                    return true;
+                else
+                    return false;
+            }
+            else if (y == 8 || y == 9)
+            {
+                if (x == 6 || x == 14)
+                    return true;
+                else
+                    return false;
+            }
+            else if (y == 10)
+            {
+                if (x >= 6 && x <= 14)
+                    return true;
+                else
+                    return false;
+            }
+            else if (y == 11)
+            {
+                if (x == 8 || x == 12)
+                    return true;
+                else
+                    return false;
+            }
+            else if (y == 12)
+            {
+                if (x >= 8 && x <= 12)
+                    return true;
+                else
+                    return false;
+            }
+            else if(y == 13)
+            {
+                if (x == 10)
+                    return true;
+                else
+                    return false;
+            }
+            else if (y == 14)
+            {
+                if (x >= 4 && x <= 16)
+                    return true;
+                else
+                    return false;
+            }
+            else if (y == 15 || y == 16 || y == 17)
+            {
+                if (x == 4 || x == 16)
+                    return true;
+                else
+                    return false;
+            }
+            else if (y == 18)
+            {
+                if (x >= 4 && x <= 16)
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
         //Sets up the outer walls and floor (background) of the game board.
         void BoardSetup()
         {
@@ -63,63 +165,25 @@ namespace Chimera
             boardHolder = new GameObject("Board").transform;
 
             //Loop along x axis, starting from -1 (to fill corner) with floor or outerwall edge tiles.
-            for (int x = -1; x < columns + 1; x++)
+            for (int x = -1; x <= columns + 1; x++)
             {
                 //Loop along y axis, starting from -1 to place floor or outerwall tiles.
-                for (int y = -1; y < rows + 1; y++)
+                for (int y = -1; y <= rows +2; y++)
                 {
                     //Choose a random tile from our array of floor tile prefabs and prepare to instantiate it.
-                    GameObject toInstantiate = Tiles[Random.Range(0, Tiles.Length)];
+                    GameObject toInstantiate = Tiles[1];
 
                     //Check if we current position is at board edge, if so choose a random outer wall prefab from our array of outer wall tiles.
-                    if (x == -1 || x == columns || y == -1 || y == rows)
+                    if (x == -1 || x == columns +1 || y == -1 || y == 19)
                         toInstantiate = Border;
-
+                    else if (tileCheck(x,y))            //Check if a tile should be in the current position
+                        toInstantiate = Tiles[0];
                     //Instantiate the GameObject instance using the prefab chosen for toInstantiate at the Vector3 corresponding to current grid position in loop, cast it to GameObject.
-                    GameObject instance =
-                        Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+                    GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
 
                     //Set the parent of our newly instantiated object instance to boardHolder, this is just organizational to avoid cluttering hierarchy.
                     instance.transform.SetParent(boardHolder);
                 }
-            }
-        }
-
-
-        //RandomPosition returns a random position from our list gridPositions.
-        Vector3 RandomPosition()
-        {
-            //Declare an integer randomIndex, set it's value to a random number between 0 and the count of items in our List gridPositions.
-            int randomIndex = Random.Range(0, gridPositions.Count);
-
-            //Declare a variable of type Vector3 called randomPosition, set it's value to the entry at randomIndex from our List gridPositions.
-            Vector3 randomPosition = gridPositions[randomIndex];
-
-            //Remove the entry at randomIndex from the list so that it can't be re-used.
-            gridPositions.RemoveAt(randomIndex);
-
-            //Return the randomly selected Vector3 position.
-            return randomPosition;
-        }
-
-
-        //LayoutObjectAtRandom accepts an array of game objects to choose from along with a minimum and maximum range for the number of objects to create.
-        void LayoutObjectAtRandom(GameObject space, int minimum, int maximum)
-        {
-            //Choose a random number of objects to instantiate within the minimum and maximum limits
-            int objectCount = Random.Range(minimum, maximum + 1);
-
-            //Instantiate objects until the randomly chosen limit objectCount is reached
-            for (int i = 0; i < objectCount; i++)
-            {
-                //Choose a position for randomPosition by getting a random position from our list of available Vector3s stored in gridPosition
-                Vector3 randomPosition = RandomPosition();
-
-                //Choose a random tile from tileArray and assign it to tileChoice
-                GameObject tileChoice = space;
-
-                //Instantiate tileChoice at the position returned by RandomPosition with no change in rotation
-                Instantiate(tileChoice, randomPosition, Quaternion.identity);
             }
         }
 
@@ -129,25 +193,8 @@ namespace Chimera
         {
             //Creates the outer walls and floor.
             BoardSetup();
-            Debug.Log("MOtherfucker\n");
             //Reset our list of gridpositions.
             InitialiseList();
-
-            //Instantiate a random number of wall tiles based on minimum and maximum, at randomized positions.
-            LayoutObjectAtRandom(Spaces, wallCount.minimum, wallCount.maximum);
-        }
-
-
-        private void Start()
-        {
-            Tiles[0] = Instantiate(Resources.Load("Prefabs/Tile")) as GameObject;
-            Tiles[1] =Instantiate(Resources.Load("Prefabs/Tile 1")) as GameObject;
-            Tiles[2] =Instantiate(Resources.Load("Prefabs/Tile 2")) as GameObject;
-            Tiles[3] =  Instantiate(Resources.Load("Prefabs/Tile 3")) as GameObject;
-
-            Border = Instantiate(Resources.Load("Prefabs/Border")) as GameObject;
-            Spaces = Instantiate(Resources.Load("Prefabs/Space")) as GameObject;
-            SetupScene();
         }
     }
 }
