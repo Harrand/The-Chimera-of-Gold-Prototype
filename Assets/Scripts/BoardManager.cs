@@ -62,7 +62,7 @@ namespace Chimera
             }
             else if(y == 1)
             {
-                if (x == 0 || x == columns)
+                if (x == 0 || x == columns-1)
                     return true;
                 else
                     return false;
@@ -165,7 +165,7 @@ namespace Chimera
             boardHolder = new GameObject("Board").transform;
 
             //Loop along x axis, starting from -1 (to fill corner) with floor or outerwall edge tiles.
-            for (int x = -1; x <= columns + 1; x++)
+            for (int x = -1; x <= columns; x++)
             {
                 //Loop along y axis, starting from -1 to place floor or outerwall tiles.
                 for (int y = -1; y <= rows +2; y++)
@@ -174,7 +174,7 @@ namespace Chimera
                     GameObject toInstantiate = Tiles[1];
 
                     //Check if we current position is at board edge, if so choose a random outer wall prefab from our array of outer wall tiles.
-                    if (x == -1 || x == columns +1 || y == -1 || y == 19)
+                    if (x == -1 || x == columns || y == -1 || y == 19)
                         toInstantiate = Border;
                     else if (tileCheck(x,y))            //Check if a tile should be in the current position
                         toInstantiate = Tiles[0];
