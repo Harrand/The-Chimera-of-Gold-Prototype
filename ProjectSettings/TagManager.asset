@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Tiles
+    uniqueID: 3239096621
+    locked: 0
+  - name: Border
+    uniqueID: 524729993
+    locked: 0
+  - name: Spaces
+    uniqueID: 1664776155
+    locked: 0
