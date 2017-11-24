@@ -178,6 +178,10 @@ namespace Chimera
                         toInstantiate = Border;
                     else if (tileCheck(x,y))            //Check if a tile should be in the current position
                         toInstantiate = Tiles[0];
+                    //Places the goal at the top
+                    if (y == 18 && x == 10)
+                        toInstantiate = Tiles[2];
+
                     //Instantiate the GameObject instance using the prefab chosen for toInstantiate at the Vector3 corresponding to current grid position in loop, cast it to GameObject.
                     GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
 
