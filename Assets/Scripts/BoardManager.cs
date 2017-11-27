@@ -29,8 +29,7 @@ namespace Chimera
         public int rows = 19;                                          //Lower and upper limit for our random number of walls per level.
 
         public GameObject[] Tiles;                                 //Array of members
-        public GameObject Border;                                 //Array of members
-
+        public GameObject Border;                                 //member
 
         private Transform boardHolder;                                  //A variable to store a reference to the transform of our Board object.
         private List<Vector3> gridPositions = new List<Vector3>();   //A list of possible locations to place tiles.
@@ -62,7 +61,7 @@ namespace Chimera
             }
             else if(y == 1)
             {
-                if (x == 0 || x == columns-1)
+                if (x == 0 || x == 4 || x == 8|| x == 12 || x == 16 || x == columns-1)
                     return true;
                 else
                     return false;
