@@ -7,6 +7,7 @@ namespace Chimera
 	public class Dice : MonoBehaviour
 	{		
 		public GameObject[] diceFace;
+		private Transform diceTransform;
 
 		void Start()
 		{
@@ -21,10 +22,15 @@ namespace Chimera
 
 		void Render (int numberRolled, int width, int height, int x, int y)
 		{		
+			diceTransform = new GameObject("dice").transform;
+
 			for (int i = 0; i<numberRolled; i++)
 			{
 				Instantiate(diceFace);
+				diceFace.transform = diceTransform;
 			}
+
+
 		}
 
 	}
