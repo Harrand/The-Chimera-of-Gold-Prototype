@@ -26,7 +26,7 @@ namespace Chimera
         // Update is called once per frame
         void Update()
         {
-            playerScript.UpdatePlayers();
+                playerScript.UpdatePlayers();
         }
     }
 }

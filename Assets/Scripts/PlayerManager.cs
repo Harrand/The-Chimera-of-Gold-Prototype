@@ -24,7 +24,6 @@ namespace Chimera
                     Pawn.AddComponent<PlayerBehaviour>();
                     Pawns[index] = Pawn;
                     int a = Pawns.Length;
-                    Debug.Log("Length " + a);
                     index++;
                 }
             }
@@ -40,21 +39,16 @@ namespace Chimera
         // Update is called once per frame
         public void UpdatePlayers()
         {
-            if (index >= 5)
-                index = 0;
+            
                    
             if(Input.GetKeyDown("space"))
             {
                 index++;
-                Debug.Log("Spaace");
-
             }
-            
+            if (index >= 5)
+                index = 0;
 
-            GameObject p = Pawns[index];
-            Debug.Log(index);
-            p.GetComponent<PlayerBehaviour>().Movement();
-
+            Pawns[index].GetComponent<PlayerBehaviour>().Movement();
         }
     }
 }
