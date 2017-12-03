@@ -18,7 +18,8 @@ namespace Chimera
         }
 
         void initBoard()
-        {
+		{
+			boardScript.checkPlayerNumbers(5);
             boardScript.SetupScene();
             playerScript.SetupPlayers();
         }
