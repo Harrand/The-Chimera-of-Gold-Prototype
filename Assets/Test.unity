@@ -243,7 +243,14 @@ MonoBehaviour:
   - {fileID: 1430731895725230, guid: 684c9a273d76f7b4884eeca625234a3a, type: 2}
   - {fileID: 1508723753618270, guid: 5c21d52bfc751b64b837efda329f74c6, type: 2}
   - {fileID: 1430731895725230, guid: 0a403e7d1d23cf947be663f918b70315, type: 2}
+  Camps:
+  - {fileID: 1850704912859684, guid: cfb2e8935b6bf416ba325951980f3beb, type: 2}
+  - {fileID: 1289789080276468, guid: 46c99026780464324b816a488774869f, type: 2}
+  - {fileID: 1037792839586248, guid: ac49d88894a0246dfb263c548094ce05, type: 2}
+  - {fileID: 1922820879922696, guid: 743d93eb2927847afbbb8c7f47820ef8, type: 2}
+  - {fileID: 1398200925515946, guid: d019e7f2207b2428e9af1ade0edcf8c0, type: 2}
   Border: {fileID: 1508723753618270, guid: 674ec6a6eaefc1a498a4deb3b8823c9f, type: 2}
+  checkCampNumber: 0000000000
 --- !u!4 &833012004
 Transform:
   m_ObjectHideFlags: 0
@@ -274,6 +281,7 @@ MonoBehaviour:
   - {fileID: 1430731895725230, guid: 45ae7bb5e47e23d4a9c53fcc4481fb5a, type: 2}
   - {fileID: 1430731895725230, guid: 453c8d3fb0bef4440a53a99f22b51e02, type: 2}
   - {fileID: 1430731895725230, guid: fe56e8580568300449bb9ffa5fcd0ad3, type: 2}
+  Pawns: []
 --- !u!1 &1127943804
 GameObject:
   m_ObjectHideFlags: 0
