@@ -59,7 +59,10 @@ namespace Chimera
 		{
 			if (x > 5) 
 			{
-				
+				for (int i = 0; i < x; i++) 
+				{
+					checkCampNumber [i] = true;
+				}
 			}
 
 			for (int i = 0; i < x; i++) 
