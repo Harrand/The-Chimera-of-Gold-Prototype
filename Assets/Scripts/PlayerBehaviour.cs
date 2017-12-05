@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chimera
-{ //Aswin And Lawrence's Amazing Emporium of Random Bits of Code That No Work Well 30/11/17
+{ //Aswin's Amazing Emporium of Random Bits of Code That Makes the whole thing work 05/12/17
     internal class PlayerBehaviour : MonoBehaviour
     {
         public int cell = 2;
@@ -49,6 +49,10 @@ namespace Chimera
 
         bool tileCheck(int x, int y)
         {
+            if(y == -1 || x == -1 || y == 19 || x == 21)
+            {
+                return false;
+            }
             if (y == 0)
             {
                 return true;
