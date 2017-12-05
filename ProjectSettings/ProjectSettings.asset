@@ -600,12 +600,13 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
+    Collab: 0
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: 246ec205-be7f-4b4e-a276-bf0000483eee
+  cloudProjectId: 9f34c8e7-0cf4-4ab7-8290-892b2c47cf42
   projectName: The Chimera of Gold
-  organizationId: harrandev
+  organizationId: quirkyqw3rty
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
