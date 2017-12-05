@@ -18,7 +18,8 @@ namespace Chimera
         }
 
         void initBoard()
-        {
+		{
+			boardScript.checkPlayerNumbers(5);
             boardScript.SetupScene();
             playerScript.SetupPlayers();
         }
@@ -26,7 +27,7 @@ namespace Chimera
         // Update is called once per frame
         void Update()
         {
-            playerScript.UpdatePlayers();
+                playerScript.UpdatePlayers();
         }
     }
 }

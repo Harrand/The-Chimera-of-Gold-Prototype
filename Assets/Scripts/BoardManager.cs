@@ -29,7 +29,9 @@ namespace Chimera
         public int rows = 19;                                          //Lower and upper limit for our random number of walls per level.
 
         public GameObject[] Tiles;                                 //Array of members
+		public GameObject[] Camps;								   //Array of camp prefabs
         public GameObject Border;                                 //member
+		public bool[] checkCampNumber = new bool[5];			 //to see how many players in this game
 
         private Transform boardHolder;                                  //A variable to store a reference to the transform of our Board object.
         private List<Vector3> gridPositions = new List<Vector3>();   //A list of possible locations to place tiles.
@@ -52,6 +54,22 @@ namespace Chimera
                 }
             }
         }
+
+		public void checkPlayerNumbers(int x)
+		{
+			if (x > 5) 
+			{
+				for (int i = 0; i < x; i++) 
+				{
+					checkCampNumber [i] = true;
+				}
+			}
+
+			for (int i = 0; i < x; i++) 
+			{
+				checkCampNumber [i] = true;
+			}
+		}
 
         bool tileCheck(int x, int y)
         {
@@ -174,7 +192,18 @@ namespace Chimera
 
                     //Check if we current position is at board edge, if so choose a random outer wall prefab from our array of outer wall tiles.
                     if (x == -1 || x == columns || y == -1 || y == 19)
-                        toInstantiate = Border;
+					if (x == 2 && y == -1 && checkCampNumber [0])             //set up the camps into the first place.
+							toInstantiate = Camps[0];
+					else if (x == 6 && y == -1 && checkCampNumber[1])
+							toInstantiate = Camps[1];
+					else if (x == 10 && y == -1 && checkCampNumber[2])
+							toInstantiate = Camps[2];
+					else if (x == 14 && y == -1 && checkCampNumber[3])
+							toInstantiate = Camps[3];
+					else if (x == 18 && y == -1 && checkCampNumber[4])
+							toInstantiate = Camps[4];
+						else 	
+                        	toInstantiate = Border;
                     else if (tileCheck(x,y))            //Check if a tile should be in the current position
                         toInstantiate = Tiles[0];
                     //Places the goal at the top
@@ -199,5 +228,6 @@ namespace Chimera
             //Reset our list of gridpositions.
             InitialiseList();
         }
+			
     }
 }
