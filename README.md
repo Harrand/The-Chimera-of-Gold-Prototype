@@ -13,11 +13,11 @@ The project consists of implementing the game, with good graphical interface and
 
 Supervisor/Sponsor: Venanzio Capretta
 
-##Trello Board:
-<a href=https://trello.com/invite/b/88T5exhN/3c102131fd8d316c66511a4cb36e6cde/group-project> Click here to go to the trello board </a>
+## Trello Board:
+* [Trello](https://trello.com/invite/b/88T5exhN/3c102131fd8d316c66511a4cb36e6cde/group-project) - Click here to go to the Trello board.
 
-##Google Drive:
-<a href=https://drive.google.com/drive/folders/0B0Np85xYiPQ3VFhwY0NwZEJRWjA?usp=sharing> Click here to access the google drive with all our documentation </a>
+## Google Drive:
+* [Google Drive](https://drive.google.com/drive/folders/0B0Np85xYiPQ3VFhwY0NwZEJRWjA?usp=sharing) - Google Drive location contains all the other resources, such as Gantt Chart, requirements, research, designs, minutes and more.
 
 ## How to Run Project:
 1. Open Unity
