@@ -8,21 +8,21 @@ namespace Chimera
 		public GameObject diceFace;
 		private Transform diceTransform;
 
-		void Start()
+		public void Start()
 		{
             // right now const parameters, edit as needed
-            const int width = 100, height = 100;
+            const int width = 10, height = 10;
             // upon script initialisation roll a default D6.
-            this.Render(Dice.Roll(1, 6), 0, 0, width, height);
+            this.Render(Dice.Roll(1, 6), -10, -1, width, height);
         }
 		
-		static int Roll (int min, int max) 
+		public static int Roll (int min, int max) 
 		{
 			int rolled = Random.Range(min,max);
 			return rolled;
 		}
 
-		void Render (int numberRolled, int x, int y, int width, int height)
+		public void Render (int numberRolled, int x, int y, int width, int height)
 		{
             // Make copy of existing 'DiceFace' prefab
             diceFace = Instantiate(Resources.Load("Prefabs/DiceFace") as GameObject);

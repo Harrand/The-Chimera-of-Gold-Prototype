@@ -282,6 +282,7 @@ MonoBehaviour:
   - {fileID: 1430731895725230, guid: 453c8d3fb0bef4440a53a99f22b51e02, type: 2}
   - {fileID: 1430731895725230, guid: fe56e8580568300449bb9ffa5fcd0ad3, type: 2}
   Pawns: []
+  dice: {fileID: 1508723753618270, guid: 3ad97d5ad56804d0cbe3e2078e88182c, type: 2}
 --- !u!1 &1127943804
 GameObject:
   m_ObjectHideFlags: 0
