@@ -54,9 +54,9 @@ TagManager:
   - name: Camps
     uniqueID: 677729353
     locked: 0
-  - name: Ring
-    uniqueID: 2057743749
-    locked: 0
   - name: Players
     uniqueID: 455024939
+    locked: 0
+  - name: Ring
+    uniqueID: 2057743749
     locked: 0

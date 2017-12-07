@@ -351,8 +351,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1127943804}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.53, y: 7.82, z: -2}
-  m_LocalScale: {x: 5.1291165, y: 5.1291165, z: 5.1291165}
+  m_LocalPosition: {x: 1.9, y: 3.5, z: 10.4}
+  m_LocalScale: {x: 13.188046, y: 13.188046, z: 13.188046}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -366,15 +366,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4678786695237314, guid: 7ee479b53913262408bb9be61c67d0d9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -16.17107
+      value: -16.76
       objectReference: {fileID: 0}
     - target: {fileID: 4678786695237314, guid: 7ee479b53913262408bb9be61c67d0d9, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.1514418
+      value: 3.18
       objectReference: {fileID: 0}
     - target: {fileID: 4678786695237314, guid: 7ee479b53913262408bb9be61c67d0d9, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -3.57
       objectReference: {fileID: 0}
     - target: {fileID: 4678786695237314, guid: 7ee479b53913262408bb9be61c67d0d9, type: 2}
       propertyPath: m_LocalRotation.x
@@ -398,17 +398,22 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 212089301936671306, guid: 7ee479b53913262408bb9be61c67d0d9,
         type: 2}
-      propertyPath: m_SortingLayerID
-      value: 2057743749
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 212089301936671306, guid: 7ee479b53913262408bb9be61c67d0d9,
+        type: 2}
+      propertyPath: m_DrawMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 212089301936671306, guid: 7ee479b53913262408bb9be61c67d0d9,
         type: 2}
-      propertyPath: m_SortingLayer
-      value: 5
+      propertyPath: m_MaskInteraction
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 1667894437244218, guid: 7ee479b53913262408bb9be61c67d0d9, type: 2}
-      propertyPath: m_TagString
-      value: Ring
+    - target: {fileID: 0}
+      propertyPath: m_Size
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7ee479b53913262408bb9be61c67d0d9, type: 2}
