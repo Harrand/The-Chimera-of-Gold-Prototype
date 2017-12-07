@@ -72,7 +72,7 @@ namespace Chimera
             return playerTurn * 5 + i;
         }
         
-        void nextPlayer()
+        public void nextPlayer()
         {
             playerTurn++;
             turn = 0;
@@ -80,6 +80,11 @@ namespace Chimera
             if (playerTurn >= 5)
                 playerTurn = 0;
         }
+
+		public GameObject getCurrentObject()
+		{
+			return Pawns [index];
+		}
       
         // Update is called once per frame
         public void UpdatePlayers()
@@ -105,7 +110,7 @@ namespace Chimera
                 if (moved >= moves)
                 {
                     move = false;
-                    Pawns[index].GetComponent<PlayerBehaviour>().resetMoves();
+					Pawns[index].GetComponent<PlayerBehaviour>().resetMoves();
                     moved = 0;
                     nextPlayer();
                 }

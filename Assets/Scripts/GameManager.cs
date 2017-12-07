@@ -16,6 +16,8 @@ namespace Chimera
             boardScript = GetComponent<BoardManager>();
             playerScript = GetComponent<PlayerManager>();
             obstacleScript = GetComponent<ObstacleManager>();
+			obstacleScript.setupManager (playerScript);
+
             initBoard();
         }
 
@@ -31,7 +33,8 @@ namespace Chimera
         // Update is called once per frame
         void Update()
         {
-                playerScript.UpdatePlayers();
+            playerScript.UpdatePlayers();
+			obstacleScript.UpdateObstacle();
         }
     }
 }

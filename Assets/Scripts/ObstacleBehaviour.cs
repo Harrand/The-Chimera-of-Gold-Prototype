@@ -5,92 +5,80 @@ using UnityEngine;
 namespace Chimera
 { //Aswin's Amazing Emporium of Random Bits of Code That Makes the whole thing work 05/12/17
 	/*Aswin + Ciara: movement funcitonality 06/12/2017 */
-	internal class PlayerBehaviour : MonoBehaviour
+	internal class ObstacleBehaviour : MonoBehaviour
 	{
 		public Vector3 target;
 		public Vector3 origin;
-		int horizontalMoves = 0;
-		int verticalMoves = 0;
-		bool upLock = false;
-		bool downLock = false;
-		public int Movement()
+		public void Movement()
 		{
-			if (Input.GetKeyDown("up") && !upLock)
+			if (Input.GetKeyDown(KeyCode.W))
 			{
 				target.y = Mathf.Round(transform.position.y) + 1;
 				target.x = Mathf.Round(transform.position.x);
 				if (tileCheck((int)target.x, (int)target.y))
 				{
 					transform.position = target;
-					verticalMoves++;
+
 					//Once the player goes up a floor, vertical moves now keep track of total moves made. 
 					//Allows changing direction on the new floor without messing up how many squares you moved on the previous floor
-					verticalMoves += Mathf.Abs(horizontalMoves);
-					horizontalMoves = 0;
-					downLock = true;
+
 				}
 				else
 					target = transform.position;
 
 			}
-			if (Input.GetKeyDown("down") && !downLock)
+			if (Input.GetKeyDown(KeyCode.S) )
 			{
 				target.y = Mathf.Round(transform.position.y) - 1;
 				target.x = Mathf.Round(transform.position.x);
 				if (tileCheck((int)target.x, (int)target.y))
 				{
 					transform.position = target;
-					verticalMoves++;
+
 					//Once the player goes down a floor, vertical moves now keep track of total moves made. 
 					//Allows changing direction on the new floor without messing up how many squares you moved on the previous floor
-					verticalMoves += Mathf.Abs(horizontalMoves);
-					horizontalMoves = 0;
-					upLock = true;
+
 				}
 				else
 					target = transform.position;
 
 
 			}
-			if (Input.GetKeyDown("right"))
+			if (Input.GetKeyDown(KeyCode.D))
 			{
 				target.x = Mathf.Round(transform.position.x) + 1;
 				target.y = Mathf.Round(transform.position.y);
 				if (tileCheck((int)target.x, (int)target.y))
 				{
 					transform.position = target;
-					horizontalMoves++;
+
 				}
 				else
 					target = transform.position;
 			}
-			if (Input.GetKeyDown("left"))
+			if (Input.GetKeyDown(KeyCode.A))
 			{
 				target.x = Mathf.Round(transform.position.x) - 1;
 				target.y = Mathf.Round(transform.position.y);
 				if (tileCheck((int)target.x, (int)target.y))
 				{
 					transform.position = target;
-					horizontalMoves--;
+
 				}
 				else
 					target = transform.position;
 			}
-			Debug.Log("horizon = " +horizontalMoves);
-			Debug.Log("verti = " +verticalMoves);
-			return ((Mathf.Abs(horizontalMoves))+(Mathf.Abs(verticalMoves)));
+
 		}
 
-		public void resetMoves()
-		{
-			horizontalMoves = 0;
-			verticalMoves = 0;
-			upLock = false;
-			downLock = false;
-		}
+
 
 		bool tileCheck(int x, int y)
 		{
+			if (y == 0) 
+			{
+				return false;
+			}
 			if(y == -1 || x == -1 || y == 19 || x == 21)
 			{
 				return false;
