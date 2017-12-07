@@ -188,7 +188,7 @@ namespace Chimera
                 //Loop along y axis, starting from -1 to place floor or outerwall tiles.
                 for (int y = -1; y <= rows +2; y++)
                 {
-                    //Choose a random tile from our array of floor tile prefabs and prepare to instantiate it.
+                    //Choose a  tile from our array of floor tile prefabs and prepare to instantiate it.
                     GameObject toInstantiate = Tiles[1];
 
                     //Check if we current position is at board edge, if so choose a random outer wall prefab from our array of outer wall tiles.

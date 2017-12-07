@@ -16,6 +16,7 @@ namespace Chimera
         public GameObject[] Players;
         public GameObject[] Pawns;
         public GameObject dice;
+        public GameObject ring;
         int index = 0;
         int turn = 0;
         int pawnsIndex = 0;
@@ -24,18 +25,21 @@ namespace Chimera
         int moves = 0;
         int moved = 0;
         bool move = false;
+        Vector3 end = new Vector3(10, 17, 0f);
 
         private void setupDice()
         {
-            dice = Instantiate(dice, new Vector3(-10, -1, -1), Quaternion.identity) as GameObject;
+            dice = Instantiate(Resources.Load("Prefabs/DiceFace") as GameObject);
             dice.AddComponent<Dice>();
-            dice.GetComponent<Dice>().Start();
+            dice.GetComponent<Dice>().diceFace = dice;
             
         }
         public void SetupPlayers()
         {
             setupDice();
-            
+
+            ring = GameObject.Find("ring");
+
             Pawns = new GameObject[25];
             for (int x = -1; x < 21; x++)
             {
@@ -46,6 +50,8 @@ namespace Chimera
                     {
                         GameObject Pawn = Instantiate(Players[index], new Vector3(x, -1, 0f), Quaternion.identity) as GameObject;
                         Pawn.AddComponent<PlayerBehaviour>();
+                        Pawn.GetComponent<PlayerBehaviour>().origin.x = x;
+                        Pawn.GetComponent<PlayerBehaviour>().origin.y = -1;
                         Pawns[pawnsIndex] = Pawn;
 
                         pawnsIndex++;
@@ -69,7 +75,15 @@ namespace Chimera
 
         int choosePawn(int i)
         {
-            return playerTurn * 5 + i;
+            int a = playerTurn * 5 + i;
+            while(Pawns[a] == null)
+            {
+                a++;
+                if (a >= 5)
+                    a = 0;
+            }
+            
+            return a;
         }
         
         void nextPlayer()
@@ -80,39 +94,49 @@ namespace Chimera
             if (playerTurn >= 5)
                 playerTurn = 0;
         }
-      
+
+        
         // Update is called once per frame
         public void UpdatePlayers()
         {
-           
-            /*
-            if(Input.GetKeyDown("space"))
-            {
-                playerTurn++;
-                turn = 0;
-
-                if(playerTurn >= 5)
-                    playerTurn = 0;
-            }
-            */
-
+            ring.transform.position = Pawns[index].GetComponent<PlayerBehaviour>().transform.position;
             /*Aswin + Ciara: Limited movement based on dice roll 06/12/2017*/
             if (move)
-            { 
+            {
                 index = choosePawn(turn);
+                ring.transform.position = Pawns[index].GetComponent<PlayerBehaviour>().transform.position;
                 moved = Pawns[index].GetComponent<PlayerBehaviour>().Movement();
                 Debug.Log("Moving pawn");
+                
+
+                //If on the final tile and can finish (Roll a one or have one left to move)
+                if ((Pawns[index].GetComponent<PlayerBehaviour>().transform.position.x == 10 && Pawns[index].GetComponent<PlayerBehaviour>().transform.position.y == 18) && (moves - moved) == 1)
+                {
+                    Pawns[index].GetComponent<PlayerBehaviour>().transform.position = end;
+                    Pawns[index] = null;
+                }
+
                 if (moved >= moves)
                 {
+                    //Checks if colliding 
+                    for(int i = 0; i < Pawns.Length; i++)
+                    {
+                        if(i != index && Pawns[index].GetComponent<PlayerBehaviour>().transform.position == Pawns[i].GetComponent<PlayerBehaviour>().transform.position)
+                        {
+                            Pawns[i].GetComponent<PlayerBehaviour>().transform.position = Pawns[i].GetComponent<PlayerBehaviour>().origin;
+                        }
+                    }
                     move = false;
                     Pawns[index].GetComponent<PlayerBehaviour>().resetMoves();
                     moved = 0;
+                    
                     nextPlayer();
                 }
                 
             }
             else
             {
+                
                 Debug.Log("Choose pawn, press space when ready to move");
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                     turn = 0;
@@ -126,13 +150,15 @@ namespace Chimera
                     turn = 4;
                 else if (Input.GetKeyDown(KeyCode.Space))
                 {
+
                     move = true;
-                    moves = Dice.Roll(1, 6);
+                    moves = Dice.Roll();
                     dice.GetComponent<Dice>().Render(moves, -10, -1, 10, 10);
                     Debug.Log("moves = " + moves);
+                    
                 }
+                ring.transform.position = Pawns[choosePawn(turn)].GetComponent<PlayerBehaviour>().transform.position;
 
-                
                 Debug.Log(turn);
             }
         }

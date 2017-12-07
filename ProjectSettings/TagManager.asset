@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ring
   layers:
   - Default
   - TransparentFX
@@ -52,6 +53,9 @@ TagManager:
     locked: 0
   - name: Camps
     uniqueID: 677729353
+    locked: 0
+  - name: Ring
+    uniqueID: 2057743749
     locked: 0
   - name: Players
     uniqueID: 455024939
