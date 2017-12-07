@@ -10,17 +10,31 @@ namespace Chimera
      *Setup, spawn, turn control too
      *Will do for now, bye
      */
+     
     public class PlayerManager : MonoBehaviour
     {
-
         public GameObject[] Players;
         public GameObject[] Pawns;
+        public GameObject dice;
         int index = 0;
+        int turn = 0;
         int pawnsIndex = 0;
         int pawnCount = 0;
         int playerTurn = 0;
+        int moves = 0;
+        int moved = 0;
+        bool move = false;
+
+        private void setupDice()
+        {
+            dice = Instantiate(dice, new Vector3(-10, -1, -1), Quaternion.identity) as GameObject;
+            dice.AddComponent<Dice>();
+            dice.GetComponent<Dice>().Start();
+            
+        }
         public void SetupPlayers()
         {
+            setupDice();
             
             Pawns = new GameObject[25];
             for (int x = -1; x < 21; x++)
@@ -53,33 +67,76 @@ namespace Chimera
                 return false;
         }
 
+        int choosePawn(int i)
+        {
+            return playerTurn * 5 + i;
+        }
+        
+        void nextPlayer()
+        {
+            playerTurn++;
+            turn = 0;
+
+            if (playerTurn >= 5)
+                playerTurn = 0;
+        }
+      
         // Update is called once per frame
         public void UpdatePlayers()
         {
-            
-            
+           
+            /*
             if(Input.GetKeyDown("space"))
             {
                 playerTurn++;
-                if(playerTurn >= 5)
-                {
-                    playerTurn = 0;
-                }
-                index = playerTurn * 5;
-            }
+                turn = 0;
 
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-                index = playerTurn * 5 + 0;
-            else if(Input.GetKeyDown(KeyCode.Alpha2))
-                index = playerTurn * 5 + 1;
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-                index = playerTurn * 5 + 2;
-            else if (Input.GetKeyDown(KeyCode.Alpha4))
-                index = playerTurn * 5 + 3;
-            else if (Input.GetKeyDown(KeyCode.Alpha5))
-                index = playerTurn * 5 + 4;
-            
-            Pawns[index].GetComponent<PlayerBehaviour>().Movement();
+                if(playerTurn >= 5)
+                    playerTurn = 0;
+            }
+            */
+
+            /*Aswin + Ciara: Limited movement based on dice roll 06/12/2017*/
+            if (move)
+            { 
+                index = choosePawn(turn);
+                moved = Pawns[index].GetComponent<PlayerBehaviour>().Movement();
+                Debug.Log("Moving pawn");
+                if (moved >= moves)
+                {
+                    move = false;
+                    Pawns[index].GetComponent<PlayerBehaviour>().resetMoves();
+                    moved = 0;
+                    nextPlayer();
+                }
+                
+            }
+            else
+            {
+                Debug.Log("Choose pawn, press space when ready to move");
+                if (Input.GetKeyDown(KeyCode.Alpha1))
+                    turn = 0;
+                else if (Input.GetKeyDown(KeyCode.Alpha2))
+                    turn = 1;
+                else if (Input.GetKeyDown(KeyCode.Alpha3))
+                    turn = 2;
+                else if (Input.GetKeyDown(KeyCode.Alpha4))
+                    turn = 3;
+                else if (Input.GetKeyDown(KeyCode.Alpha5))
+                    turn = 4;
+                else if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    move = true;
+                    moves = Dice.Roll(1, 6);
+                    dice.GetComponent<Dice>().Render(moves, -10, -1, 10, 10);
+                    Debug.Log("moves = " + moves);
+                }
+
+                
+                Debug.Log(turn);
+            }
         }
+
+        
     }
 }

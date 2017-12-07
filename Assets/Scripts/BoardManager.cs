@@ -71,6 +71,7 @@ namespace Chimera
 			}
 		}
 
+        //Checks where the tile goes when buiilding the board
         bool tileCheck(int x, int y)
         {
             if (y == 0)
