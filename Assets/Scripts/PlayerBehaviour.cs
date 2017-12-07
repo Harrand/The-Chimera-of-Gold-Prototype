@@ -81,6 +81,8 @@ namespace Chimera
             return ((Mathf.Abs(horizontalMoves))+(Mathf.Abs(verticalMoves)));
         }
 
+        
+
         public void resetMoves()
         {
             horizontalMoves = 0;

@@ -13,19 +13,19 @@ namespace Chimera
             // right now const parameters, edit as needed
             const int width = 10, height = 10;
             // upon script initialisation roll a default D6.
-            this.Render(Dice.Roll(1, 6), -10, -1, width, height);
+            //diceFace = Instantiate(Resources.Load("Prefabs/DiceFace") as GameObject);
+            //this.Resources.Load("Prefabs/DiceFace");
+            this.Render(6, -10, -1, width, height);
         }
 		
-		public static int Roll (int min, int max) 
+		public static int Roll () 
 		{
-			int rolled = Random.Range(min,max);
+			int rolled = Random.Range(1,7);
 			return rolled;
 		}
 
 		public void Render (int numberRolled, int x, int y, int width, int height)
 		{
-            // Make copy of existing 'DiceFace' prefab
-            diceFace = Instantiate(Resources.Load("Prefabs/DiceFace") as GameObject);
             // Edit sprite to be loaded texture dice_faces/x.png where x is number rolled.
             diceFace.GetComponent<SpriteRenderer>().sprite = Resources.Load("dice_faces/" + numberRolled, typeof(Sprite)) as Sprite;
             // White background or the whole thing is black.
@@ -33,6 +33,7 @@ namespace Chimera
             // Set scale, position and rotation.
             diceFace.transform.localScale = new Vector3(width, height, 1);
             diceFace.transform.SetPositionAndRotation(new Vector3(x, y, 0), Quaternion.identity);
+            
 		}
 
 	}

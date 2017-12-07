@@ -27,9 +27,9 @@ namespace Chimera
 
         private void setupDice()
         {
-            dice = Instantiate(dice, new Vector3(-10, -1, -1), Quaternion.identity) as GameObject;
+            dice = Instantiate(Resources.Load("Prefabs/DiceFace") as GameObject);
             dice.AddComponent<Dice>();
-            dice.GetComponent<Dice>().Start();
+            dice.GetComponent<Dice>().diceFace = dice;
             
         }
         public void SetupPlayers()
@@ -46,6 +46,8 @@ namespace Chimera
                     {
                         GameObject Pawn = Instantiate(Players[index], new Vector3(x, -1, 0f), Quaternion.identity) as GameObject;
                         Pawn.AddComponent<PlayerBehaviour>();
+                        Pawn.GetComponent<PlayerBehaviour>().origin.x = x;
+                        Pawn.GetComponent<PlayerBehaviour>().origin.y = -1;
                         Pawns[pawnsIndex] = Pawn;
 
                         pawnsIndex++;
@@ -80,33 +82,32 @@ namespace Chimera
             if (playerTurn >= 5)
                 playerTurn = 0;
         }
-      
+
+        
         // Update is called once per frame
         public void UpdatePlayers()
         {
-           
-            /*
-            if(Input.GetKeyDown("space"))
-            {
-                playerTurn++;
-                turn = 0;
-
-                if(playerTurn >= 5)
-                    playerTurn = 0;
-            }
-            */
-
             /*Aswin + Ciara: Limited movement based on dice roll 06/12/2017*/
             if (move)
             { 
+                
                 index = choosePawn(turn);
                 moved = Pawns[index].GetComponent<PlayerBehaviour>().Movement();
                 Debug.Log("Moving pawn");
                 if (moved >= moves)
                 {
+                    //Checks if colliding 
+                    for(int i = 0; i < Pawns.Length; i++)
+                    {
+                        if(i != index && Pawns[index].GetComponent<PlayerBehaviour>().transform.position == Pawns[i].GetComponent<PlayerBehaviour>().transform.position)
+                        {
+                            Pawns[i].GetComponent<PlayerBehaviour>().transform.position = Pawns[i].GetComponent<PlayerBehaviour>().origin;
+                        }
+                    }
                     move = false;
                     Pawns[index].GetComponent<PlayerBehaviour>().resetMoves();
                     moved = 0;
+                    
                     nextPlayer();
                 }
                 
@@ -127,7 +128,7 @@ namespace Chimera
                 else if (Input.GetKeyDown(KeyCode.Space))
                 {
                     move = true;
-                    moves = Dice.Roll(1, 6);
+                    moves = Dice.Roll();
                     dice.GetComponent<Dice>().Render(moves, -10, -1, 10, 10);
                     Debug.Log("moves = " + moves);
                 }
