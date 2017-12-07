@@ -24,6 +24,7 @@ namespace Chimera
         int moves = 0;
         int moved = 0;
         bool move = false;
+        Vector3 end = new Vector3(10, 17, 0f);
 
         private void setupDice()
         {
@@ -94,6 +95,14 @@ namespace Chimera
                 index = choosePawn(turn);
                 moved = Pawns[index].GetComponent<PlayerBehaviour>().Movement();
                 Debug.Log("Moving pawn");
+
+                //If on the final tile and can finish (Roll a one or have one left to move)
+                if((Pawns[index].GetComponent<PlayerBehaviour>().transform.position.x == 10 && Pawns[index].GetComponent<PlayerBehaviour>().transform.position.y == 18) && (moves - moved) == 1)
+                {
+                    Pawns[index].GetComponent<PlayerBehaviour>().transform.position = end;
+                    Pawns
+                }
+
                 if (moved >= moves)
                 {
                     //Checks if colliding 
