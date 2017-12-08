@@ -21,7 +21,8 @@ namespace Chimera
 		public static int Roll () 
 		{
 			int rolled = Random.Range(1,7);
-			return rolled;
+            return rolled;
+            
 		}
 
 		public void Render (int numberRolled, int x, int y, int width, int height)

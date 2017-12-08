@@ -76,8 +76,8 @@ namespace Chimera
                 else
                     target = transform.position;
             }
-            Debug.Log("horizon = " +horizontalMoves);
-            Debug.Log("verti = " +verticalMoves);
+            //Debug.Log("horizon = " +horizontalMoves);
+            //Debug.Log("verti = " +verticalMoves);
             return ((Mathf.Abs(horizontalMoves))+(Mathf.Abs(verticalMoves)));
         }
 
