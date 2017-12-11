@@ -132,7 +132,7 @@ namespace Chimera
                 else if (Input.GetKeyDown(KeyCode.Space))
                 {
                     move = true;
-                    moves = Dice.Roll(1, 6);
+                    moves = Dice.Roll();
                     dice.GetComponent<Dice>().Render(moves, -10, -1, 10, 10);
                     Debug.Log("moves = " + moves);
                 }
