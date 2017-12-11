@@ -77,7 +77,6 @@ namespace Chimera{
 				if (Input.GetKeyDown(KeyCode.O))
 				{
 					move = false;
-					manager.nextPlayer();
 				}
 
 			}
