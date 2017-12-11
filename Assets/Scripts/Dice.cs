@@ -5,6 +5,7 @@ namespace Chimera
 	public class Dice : MonoBehaviour
 	{		
         // Harry and Ciara 30/11/2017
+        //diceix??
 		public GameObject diceFace;
 		private Transform diceTransform;
 
