@@ -9,75 +9,89 @@ namespace Chimera
 	{
 		public Vector3 target;
 		public Vector3 origin;
-		int horizontalMoves = 0;
+        public bool[] OnObstacles;
+        int horizontalMoves = 0;
 		int verticalMoves = 0;
 		bool upLock = false;
 		bool downLock = false;
-		public int Movement()
-		{
-			if (Input.GetKeyDown("up") && !upLock)
-			{
-				target.y = Mathf.Round(transform.position.y) + 1;
-				target.x = Mathf.Round(transform.position.x);
-				if (tileCheck((int)target.x, (int)target.y))
-				{
-					transform.position = target;
-					verticalMoves++;
-					//Once the player goes up a floor, vertical moves now keep track of total moves made. 
-					//Allows changing direction on the new floor without messing up how many squares you moved on the previous floor
-					verticalMoves += Mathf.Abs(horizontalMoves);
-					horizontalMoves = 0;
-					downLock = true;
-				}
-				else
-					target = transform.position;
 
-			}
-			if (Input.GetKeyDown("down") && !downLock)
-			{
-				target.y = Mathf.Round(transform.position.y) - 1;
-				target.x = Mathf.Round(transform.position.x);
-				if (tileCheck((int)target.x, (int)target.y))
-				{
-					transform.position = target;
-					verticalMoves++;
-					//Once the player goes down a floor, vertical moves now keep track of total moves made. 
-					//Allows changing direction on the new floor without messing up how many squares you moved on the previous floor
-					verticalMoves += Mathf.Abs(horizontalMoves);
-					horizontalMoves = 0;
-					upLock = true;
-				}
-				else
-					target = transform.position;
+        public void Start()
+        {
+            OnObstacles = new bool[25];
+            for (int i = 0; i < 25; i++)
+                OnObstacles[i] = false;
+        }
+
+        public int Movement(int index)
+        {
+            if (Input.GetKeyDown("up") && !upLock)
+            {
+                target.y = Mathf.Round(transform.position.y) + 1;
+                target.x = Mathf.Round(transform.position.x);
+                if (tileCheck((int)target.x, (int)target.y))
+                {
+                    transform.position = target;
+                    verticalMoves++;
+                    //Once the player goes up a floor, vertical moves now keep track of total moves made. 
+                    //Allows changing direction on the new floor without messing up how many squares you moved on the previous floor
+                    verticalMoves += Mathf.Abs(horizontalMoves);
+                    horizontalMoves = 0;
+                    downLock = true;
+                }
+                else
+                    target = transform.position;
+
+            }
+            if (Input.GetKeyDown("down") && !downLock)
+            {
+                target.y = Mathf.Round(transform.position.y) - 1;
+                target.x = Mathf.Round(transform.position.x);
+                if (tileCheck((int)target.x, (int)target.y))
+                {
+                    transform.position = target;
+                    verticalMoves++;
+                    //Once the player goes down a floor, vertical moves now keep track of total moves made. 
+                    //Allows changing direction on the new floor without messing up how many squares you moved on the previous floor
+                    verticalMoves += Mathf.Abs(horizontalMoves);
+                    horizontalMoves = 0;
+                    upLock = true;
+                }
+                else
+                    target = transform.position;
 
 
-			}
-			if (Input.GetKeyDown("right"))
-			{
-				target.x = Mathf.Round(transform.position.x) + 1;
-				target.y = Mathf.Round(transform.position.y);
-				if (tileCheck((int)target.x, (int)target.y))
-				{
-					transform.position = target;
-					horizontalMoves++;
-				}
-				else
-					target = transform.position;
-			}
-			if (Input.GetKeyDown("left"))
-			{
-				target.x = Mathf.Round(transform.position.x) - 1;
-				target.y = Mathf.Round(transform.position.y);
-				if (tileCheck((int)target.x, (int)target.y))
-				{
-					transform.position = target;
-					horizontalMoves--;
-				}
-				else
-					target = transform.position;
-			}
-			Debug.Log("horizon = " +horizontalMoves);
-			Debug.Log("verti = " +verticalMoves);
+            }
+            if (Input.GetKeyDown("right"))
+            {
+                target.x = Mathf.Round(transform.position.x) + 1;
+                target.y = Mathf.Round(transform.position.y);
+                if (tileCheck((int)target.x, (int)target.y))
+                {
+                    transform.position = target;
+                    horizontalMoves++;
+                }
+                else
+                    target = transform.position;
+            }
+            if (Input.GetKeyDown("left"))
+            {
+                target.x = Mathf.Round(transform.position.x) - 1;
+                target.y = Mathf.Round(transform.position.y);
+                if (tileCheck((int)target.x, (int)target.y))
+                {
+                    transform.position = target;
+                    horizontalMoves--;
+                }
+                else
+                    target = transform.position;
+            }
+            //Debug.Log("horizon = " +horizontalMoves);
+            //Debug.Log("verti = " +verticalMoves);
+            if (ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y))
+                OnObstacles[index] = true;
+            else
+                OnObstacles[index] = false;
+            Debug.Log("Is pawn index " + index + " on an obstacle? " + (OnObstacles[index] ? "yes" : "no"));
 			return ((Mathf.Abs(horizontalMoves))+(Mathf.Abs(verticalMoves)));
 		}
 

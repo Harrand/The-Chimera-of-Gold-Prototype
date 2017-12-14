@@ -38,7 +38,7 @@ namespace Chimera{
 	        }
 	    }
 
-	    bool CheckObstacleTile(int x, int y)
+	    public static bool CheckObstacleTile(int x, int y)
 	    {
 			if (y == 2)
 	        {
@@ -68,12 +68,12 @@ namespace Chimera{
 
 		public void UpdateObstacle()
 		{
-			Debug.Log (move);
+			//Debug.Log (move);
 			if (move)
 			{ 
-				Debug.Log (obstacle_Index);
+				//Debug.Log (obstacle_Index);
 				Obstacles_array[obstacle_Index].GetComponent<ObstacleBehaviour>().Movement();
-				Debug.Log("Moving obstacle");
+				//Debug.Log("Moving obstacle");
 				if (Input.GetKeyDown(KeyCode.O))
 				{
 					move = false;
@@ -82,11 +82,11 @@ namespace Chimera{
 			}
 			else
 			{
-				Debug.Log("Choose pawn, press space when ready to move");
+				//Debug.Log("Choose pawn, press space when ready to move");
 				if (Input.GetKeyDown(KeyCode.O))
 				{
 					obstacle_moving = true;
-					Debug.Log ("obstacle is moving");
+					//Debug.Log ("obstacle is moving");
 					move = true;
 					Vector3 pawnPosition = manager.getCurrentObject ().transform.position;
 					for (int i = 0; i < 13; i++) 
@@ -96,7 +96,7 @@ namespace Chimera{
 							obstacle_Index = i;
 						}
 					}
-					Debug.Log (obstacle_Index);
+					//Debug.Log (obstacle_Index);
 				}
 					
 			}

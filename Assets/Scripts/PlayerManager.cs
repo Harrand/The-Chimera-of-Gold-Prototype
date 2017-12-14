@@ -106,8 +106,8 @@ namespace Chimera
             if (move)
             { 
                 index = choosePawn(turn);
-                moved = Pawns[index].GetComponent<PlayerBehaviour>().Movement();
-                Debug.Log("Moving pawn");
+                moved = Pawns[index].GetComponent<PlayerBehaviour>().Movement(index);
+                //Debug.Log("Moving pawn");
                 if (moved >= moves)
                 {
                     move = false;
@@ -119,7 +119,7 @@ namespace Chimera
             }
             else
             {
-                Debug.Log("Choose pawn, press space when ready to move");
+                //Debug.Log("Choose pawn, press space when ready to move");
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                     turn = 0;
                 else if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -135,11 +135,11 @@ namespace Chimera
                     move = true;
                     moves = Dice.Roll();
                     dice.GetComponent<Dice>().Render(moves, -10, -1, 10, 10);
-                    Debug.Log("moves = " + moves);
+                    //Debug.Log("moves = " + moves);
                 }
 
                 
-                Debug.Log(turn);
+                //Debug.Log(turn);
             }
         }
 
