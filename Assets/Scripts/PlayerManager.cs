@@ -17,6 +17,7 @@ namespace Chimera
         public GameObject[] Pawns;
         public GameObject dice;
         public GameObject ring;
+        public int restMove = 0;
         int[] points = new int[] { 0,0,0,0,0};
         int index = 0;
         int turn = 0;
@@ -133,7 +134,7 @@ namespace Chimera
                 ring.transform.position = Pawns[index].GetComponent<PlayerBehaviour>().transform.position;
                 moved = Pawns[index].GetComponent<PlayerBehaviour>().Movement(index);
                 Debug.Log("Moving pawn");
-                
+                Pawns[index].GetComponent<PlayerBehaviour>().restMove = moves - moved;
 
                 //If on the final tile and can finish (Roll a one or have one left to move)
                 if ((Pawns[index].GetComponent<PlayerBehaviour>().transform.position.x == 10 && Pawns[index].GetComponent<PlayerBehaviour>().transform.position.y == 18) && (moves - moved) == 1)
@@ -174,7 +175,7 @@ namespace Chimera
                     
                     nextPlayer();
                 }
-                
+
             }
             else
             {
@@ -200,7 +201,5 @@ namespace Chimera
                 //Debug.Log(turn);
             }
         }
-
-        
     }
 }

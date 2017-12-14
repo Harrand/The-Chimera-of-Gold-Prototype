@@ -9,6 +9,7 @@ namespace Chimera
 	{
 		public Vector3 target;
 		public Vector3 origin;
+        public int restMove;
         public bool[] OnObstacles;
         int horizontalMoves = 0;
 		int verticalMoves = 0;
@@ -28,7 +29,7 @@ namespace Chimera
             {
                 target.y = Mathf.Round(transform.position.y) + 1;
                 target.x = Mathf.Round(transform.position.x);
-                if (tileCheck((int)target.x, (int)target.y))
+                if (tileCheck((int)target.x, (int)target.y) && (!ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y + 1) || (ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y + 1) && restMove == 1)))
                 {
                     transform.position = target;
                     verticalMoves++;
@@ -46,7 +47,7 @@ namespace Chimera
             {
                 target.y = Mathf.Round(transform.position.y) - 1;
                 target.x = Mathf.Round(transform.position.x);
-                if (tileCheck((int)target.x, (int)target.y))
+                if (tileCheck((int)target.x, (int)target.y) && (!ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y - 1) || (ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y - 1) && restMove == 1)))
                 {
                     transform.position = target;
                     verticalMoves++;
@@ -65,7 +66,7 @@ namespace Chimera
             {
                 target.x = Mathf.Round(transform.position.x) + 1;
                 target.y = Mathf.Round(transform.position.y);
-                if (tileCheck((int)target.x, (int)target.y))
+                if (tileCheck((int)target.x, (int)target.y) && (!ObstacleManager.CheckObstacleTile((int)transform.position.x + 1, (int)transform.position.y) || (ObstacleManager.CheckObstacleTile((int)transform.position.x + 1, (int)transform.position.y) && restMove == 1)))
                 {
                     transform.position = target;
                     horizontalMoves++;
@@ -77,7 +78,7 @@ namespace Chimera
             {
                 target.x = Mathf.Round(transform.position.x) - 1;
                 target.y = Mathf.Round(transform.position.y);
-                if (tileCheck((int)target.x, (int)target.y))
+                if (tileCheck((int)target.x, (int)target.y) && (!ObstacleManager.CheckObstacleTile((int)transform.position.x - 1, (int)transform.position.y) || (ObstacleManager.CheckObstacleTile((int)transform.position.x - 1, (int)transform.position.y) && restMove == 1)))
                 {
                     transform.position = target;
                     horizontalMoves--;
