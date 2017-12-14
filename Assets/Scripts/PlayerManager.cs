@@ -15,10 +15,12 @@ namespace Chimera
     {
         public GameObject[] Players;
         public GameObject[] Pawns;
+        public bool[] OnObstacles;
         public GameObject dice;
         public GameObject ring;
+        public ObstacleManager obstacleScript;
         int[] points = new int[] { 0,0,0,0,0};
-        int index = 0;
+        public int index = 0;
         int turn = 0;
         int pawnsIndex = 0;
         int pawnCount = 0;
@@ -70,7 +72,9 @@ namespace Chimera
                         index = 0;
                 }
             }
-            
+            OnObstacles = new bool[25];
+            for (int i = 0; i < 25; i++)
+                OnObstacles[i] = false;
         }
         bool CheckPlayerTile(int x)
         {
@@ -132,9 +136,12 @@ namespace Chimera
                 index = choosePawn(turn);
                 ring.transform.position = Pawns[index].GetComponent<PlayerBehaviour>().transform.position;
                 moved = Pawns[index].GetComponent<PlayerBehaviour>().Movement(index);
-                Debug.Log("Moving pawn");
+                //Debug.Log("Moving pawn");
                 
-
+                if(OnObstacles[index])
+                {
+                    Debug.Log("You should be able to move an obstacle now!");
+                }
                 //If on the final tile and can finish (Roll a one or have one left to move)
                 if ((Pawns[index].GetComponent<PlayerBehaviour>().transform.position.x == 10 && Pawns[index].GetComponent<PlayerBehaviour>().transform.position.y == 18) && (moves - moved) == 1)
                 {
@@ -171,7 +178,7 @@ namespace Chimera
                     move = false;
 					Pawns[index].GetComponent<PlayerBehaviour>().resetMoves();
                     moved = 0;
-                    
+                    OnObstacles[index] = obstacleScript.CheckObstacle((int)Pawns[index].transform.position.x, (int)Pawns[index].transform.position.y);
                     nextPlayer();
                 }
                 

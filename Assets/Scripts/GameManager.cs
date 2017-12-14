@@ -16,6 +16,7 @@ namespace Chimera
             boardScript = GetComponent<BoardManager>();
             playerScript = GetComponent<PlayerManager>();
             obstacleScript = GetComponent<ObstacleManager>();
+            playerScript.obstacleScript = obstacleScript;
 			obstacleScript.setupManager (playerScript);
 
             initBoard();

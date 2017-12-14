@@ -66,12 +66,22 @@ namespace Chimera{
 	        }  
 	    }
 
+        public bool CheckObstacle(int x, int y)
+        {
+            foreach(GameObject obstacle in Obstacles_array)
+            {
+                if (obstacle.transform.position.x == x && obstacle.transform.position.y == y)
+                    return true;
+            }
+            return false;
+        }
+
 		public void UpdateObstacle()
 		{
 			//Debug.Log (move);
 			if (move)
 			{ 
-				//Debug.Log (obstacle_Index);
+				Debug.Log (obstacle_Index);
 				Obstacles_array[obstacle_Index].GetComponent<ObstacleBehaviour>().Movement();
 				//Debug.Log("Moving obstacle");
 				if (Input.GetKeyDown(KeyCode.O))
@@ -83,10 +93,10 @@ namespace Chimera{
 			else
 			{
 				//Debug.Log("Choose pawn, press space when ready to move");
-				if (Input.GetKeyDown(KeyCode.O))
+				if (Input.GetKeyDown(KeyCode.O) && manager.OnObstacles[manager.index])
 				{
 					obstacle_moving = true;
-					//Debug.Log ("obstacle is moving");
+					Debug.Log ("obstacle is moving");
 					move = true;
 					Vector3 pawnPosition = manager.getCurrentObject().transform.position;
 					for (int i = 0; i < 13; i++) 

@@ -8,19 +8,11 @@ namespace Chimera
 	internal class PlayerBehaviour : MonoBehaviour
 	{
 		public Vector3 target;
-		public Vector3 origin;
-        public bool[] OnObstacles;
+        public Vector3 origin;
         int horizontalMoves = 0;
 		int verticalMoves = 0;
 		bool upLock = false;
 		bool downLock = false;
-
-        public void Start()
-        {
-            OnObstacles = new bool[25];
-            for (int i = 0; i < 25; i++)
-                OnObstacles[i] = false;
-        }
 
         public int Movement(int index)
         {
@@ -85,13 +77,6 @@ namespace Chimera
                 else
                     target = transform.position;
             }
-            //Debug.Log("horizon = " +horizontalMoves);
-            //Debug.Log("verti = " +verticalMoves);
-            if (ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y))
-                OnObstacles[index] = true;
-            else
-                OnObstacles[index] = false;
-            Debug.Log("Is pawn index " + index + " on an obstacle? " + (OnObstacles[index] ? "yes" : "no"));
 			return ((Mathf.Abs(horizontalMoves))+(Mathf.Abs(verticalMoves)));
 		}
 
