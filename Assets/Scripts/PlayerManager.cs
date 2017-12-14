@@ -29,6 +29,7 @@ namespace Chimera
         {
             dice = Instantiate(dice, new Vector3(-10, -1, -1), Quaternion.identity) as GameObject;
             dice.AddComponent<Dice>();
+            dice.GetComponent<Dice>().diceFace = dice;
             dice.GetComponent<Dice>().Start();
             
         }
