@@ -156,8 +156,9 @@ namespace Chimera
                     ring.transform.position = Pawns[choosePawn(0)].GetComponent<PlayerBehaviour>().transform.position;
                 }
 
-                if (moved >= moves)
+                if (moved >= moves || Pawns[index].GetComponent<PlayerBehaviour>().meetObsracle)
                 {
+                    Debug.Log("into if move");
                     //Checks if colliding 
                     for(int i = 0; i < Pawns.Length; i++)
                     {
@@ -172,7 +173,8 @@ namespace Chimera
                     move = false;
 					Pawns[index].GetComponent<PlayerBehaviour>().resetMoves();
                     moved = 0;
-                    
+
+
                     nextPlayer();
                 }
 

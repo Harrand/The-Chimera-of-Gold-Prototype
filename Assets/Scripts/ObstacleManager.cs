@@ -66,7 +66,7 @@ namespace Chimera{
 	        }  
 	    }
 
-		public void UpdateObstacle()
+        public void UpdateObstacle()
 		{
 			//Debug.Log (move);
 			if (move)
