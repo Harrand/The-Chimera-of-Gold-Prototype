@@ -65,7 +65,7 @@ namespace Chimera{
 	            return false;
 	        }  
 	    }
-
+			
         public bool CheckObstacle(int x, int y)
         {
             foreach(GameObject obstacle in Obstacles_array)
@@ -75,8 +75,8 @@ namespace Chimera{
             }
             return false;
         }
-
-		public void UpdateObstacle()
+			
+        public void UpdateObstacle()
 		{
 			//Debug.Log (move);
 			if (move)

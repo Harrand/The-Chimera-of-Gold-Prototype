@@ -19,6 +19,7 @@ namespace Chimera
         public GameObject dice;
         public GameObject ring;
         public ObstacleManager obstacleScript;
+        public int restMove = 0;
         int[] points = new int[] { 0,0,0,0,0};
         public int index = 0;
         int turn = 0;
@@ -136,12 +137,8 @@ namespace Chimera
                 index = choosePawn(turn);
                 ring.transform.position = Pawns[index].GetComponent<PlayerBehaviour>().transform.position;
                 moved = Pawns[index].GetComponent<PlayerBehaviour>().Movement(index);
-                //Debug.Log("Moving pawn");
-                
-                if(OnObstacles[index])
-                {
-                    Debug.Log("You should be able to move an obstacle now!");
-                }
+                Debug.Log("Moving pawn");
+                Pawns[index].GetComponent<PlayerBehaviour>().restMove = moves - moved;
                 //If on the final tile and can finish (Roll a one or have one left to move)
                 if ((Pawns[index].GetComponent<PlayerBehaviour>().transform.position.x == 10 && Pawns[index].GetComponent<PlayerBehaviour>().transform.position.y == 18) && (moves - moved) == 1)
                 {
@@ -162,8 +159,9 @@ namespace Chimera
                     ring.transform.position = Pawns[choosePawn(0)].GetComponent<PlayerBehaviour>().transform.position;
                 }
 
-                if (moved >= moves)
+                if (moved >= moves || Pawns[index].GetComponent<PlayerBehaviour>().meetObsracle)
                 {
+                    Debug.Log("into if move");
                     //Checks if colliding 
                     for(int i = 0; i < Pawns.Length; i++)
                     {
@@ -181,7 +179,7 @@ namespace Chimera
                     OnObstacles[index] = obstacleScript.CheckObstacle((int)Pawns[index].transform.position.x, (int)Pawns[index].transform.position.y);
                     nextPlayer();
                 }
-                
+
             }
             else
             {
@@ -207,7 +205,5 @@ namespace Chimera
                 //Debug.Log(turn);
             }
         }
-
-        
     }
 }
