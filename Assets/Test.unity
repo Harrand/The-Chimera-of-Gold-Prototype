@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 833012003}
   - component: {fileID: 833012002}
   - component: {fileID: 833012005}
+  - component: {fileID: 833012006}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -223,6 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardScript: {fileID: 0}
   playerScript: {fileID: 0}
+  obstacleScript: {fileID: 0}
 --- !u!114 &833012003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,6 +286,19 @@ MonoBehaviour:
   Pawns: []
   dice: {fileID: 1508723753618270, guid: 3ad97d5ad56804d0cbe3e2078e88182c, type: 2}
   ring: {fileID: 0}
+--- !u!114 &833012006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 833012001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e802b09dd8e82a4d8a3be7891516372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Obstacles:
+  - {fileID: 1812585245509068, guid: cbf1260afaa181c45b8d5552171e5287, type: 2}
 --- !u!1 &1127943804
 GameObject:
   m_ObjectHideFlags: 0

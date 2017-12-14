@@ -8,12 +8,16 @@ namespace Chimera
     {
         public BoardManager boardScript;
         public PlayerManager playerScript;
+        public ObstacleManager obstacleScript;
 
         // Use this for initialization
         void Start()
         {
             boardScript = GetComponent<BoardManager>();
             playerScript = GetComponent<PlayerManager>();
+            obstacleScript = GetComponent<ObstacleManager>();
+			obstacleScript.setupManager (playerScript);
+
             initBoard();
         }
 
@@ -22,12 +26,15 @@ namespace Chimera
 			boardScript.checkPlayerNumbers(5);
             boardScript.SetupScene();
             playerScript.SetupPlayers();
+            obstacleScript.SetupObstacles();
+
         }
 
         // Update is called once per frame
         void Update()
         {
-                playerScript.UpdatePlayers();
+            playerScript.UpdatePlayers();
+			obstacleScript.UpdateObstacle();
         }
     }
 }

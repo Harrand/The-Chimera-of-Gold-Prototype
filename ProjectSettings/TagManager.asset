@@ -54,6 +54,9 @@ TagManager:
   - name: Camps
     uniqueID: 677729353
     locked: 0
+  - name: Obstacles
+    uniqueID: 643372741
+    locked: 0
   - name: Players
     uniqueID: 455024939
     locked: 0

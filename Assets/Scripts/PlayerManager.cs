@@ -33,8 +33,14 @@ namespace Chimera
             dice = Instantiate(Resources.Load("Prefabs/DiceFace") as GameObject);
             dice.AddComponent<Dice>();
             dice.GetComponent<Dice>().diceFace = dice;
-            
+            dice.GetComponent<Dice>().Start();            
         }
+
+        public GameObject getCurrentObject()
+        {
+            return Pawns[index];
+        }
+
         public void SetupPlayers()
         {
             setupDice();
@@ -87,7 +93,7 @@ namespace Chimera
             return a;
         }
         
-        void nextPlayer()
+        public void nextPlayer()
         {
             playerTurn++;
             turn = 0;
@@ -125,7 +131,7 @@ namespace Chimera
             {
                 index = choosePawn(turn);
                 ring.transform.position = Pawns[index].GetComponent<PlayerBehaviour>().transform.position;
-                moved = Pawns[index].GetComponent<PlayerBehaviour>().Movement();
+                moved = Pawns[index].GetComponent<PlayerBehaviour>().Movement(index);
                 Debug.Log("Moving pawn");
                 
 
@@ -163,7 +169,7 @@ namespace Chimera
                         }
                     }
                     move = false;
-                    Pawns[index].GetComponent<PlayerBehaviour>().resetMoves();
+					Pawns[index].GetComponent<PlayerBehaviour>().resetMoves();
                     moved = 0;
                     
                     nextPlayer();
@@ -172,7 +178,6 @@ namespace Chimera
             }
             else
             {
-                
                 //Debug.Log("Choose pawn, press space when ready to move");
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                     turn = 0;
@@ -190,12 +195,9 @@ namespace Chimera
                     move = true;
                     moves = Dice.Roll();
                     dice.GetComponent<Dice>().Render(moves, -10, -1, 10, 10);
-                    //Debug.Log("moves = " + moves);
-                    
                 }
                 ring.transform.position = Pawns[choosePawn(turn)].GetComponent<PlayerBehaviour>().transform.position;
-
-                Debug.Log(turn);
+                //Debug.Log(turn);
             }
         }
 
