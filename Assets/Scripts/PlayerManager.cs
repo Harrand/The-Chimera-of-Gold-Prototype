@@ -25,11 +25,22 @@ namespace Chimera
         int turn = 0;
         int pawnsIndex = 0;
         int pawnCount = 0;
-        int playerTurn = 0;
+        public static int playerTurn = 0;
         int moves = 0;
         int moved = 0;
         bool move = false;
         Vector3 end = new Vector3(10, 17, 0f);
+
+        public int human = 4;
+
+        public GameObject[] GetPlayers()
+        {
+            return Players;
+        }
+        public GameObject[] GetPawns()
+        {
+            return Pawns;
+        }
 
         private void setupDice()
         {
@@ -58,11 +69,22 @@ namespace Chimera
                 {
                     while (pawnCount < 5)
                     {
+                        Debug.Log(index);
                         GameObject Pawn = Instantiate(Players[index], new Vector3(x, -1, 0f), Quaternion.identity) as GameObject;
-                        Pawn.AddComponent<PlayerBehaviour>();
-                        Pawn.GetComponent<PlayerBehaviour>().origin.x = x;
-                        Pawn.GetComponent<PlayerBehaviour>().origin.y = -1;
+                        if (pawnsIndex < human * 5)
+                        {
+                            Pawn.AddComponent<PlayerBehaviour>();
+                            Pawn.GetComponent<PlayerBehaviour>().origin.x = x;
+                            Pawn.GetComponent<PlayerBehaviour>().origin.y = -1;
+                        }
+                        else
+                        {
+                            Pawn.AddComponent<AIBehaviour>();
+                            Pawn.GetComponent<AIBehaviour>().origin.x = x;
+                            Pawn.GetComponent<AIBehaviour>().origin.y = -1;
+                        }
                         Pawns[pawnsIndex] = Pawn;
+
 
                         pawnsIndex++;
                         pawnCount++;
@@ -89,6 +111,7 @@ namespace Chimera
         {
             int a = playerTurn * 5 + i;
             int x = 0;
+            Debug.Log(a);
             while(Pawns[a] == null)
             {
                 a = playerTurn * 5 + x;

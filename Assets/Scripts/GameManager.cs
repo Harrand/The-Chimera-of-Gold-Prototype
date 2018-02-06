@@ -9,7 +9,7 @@ namespace Chimera
         public BoardManager boardScript;
         public PlayerManager playerScript;
         public ObstacleManager obstacleScript;
-        public AI aiScript;
+        //public AI aiScript;
 
         // Use this for initialization
         void Start()
@@ -17,11 +17,12 @@ namespace Chimera
             boardScript = GetComponent<BoardManager>();
             playerScript = GetComponent<PlayerManager>();
             obstacleScript = GetComponent<ObstacleManager>();
-            aiScript = GetComponent<AI>();
+            //aiScript = GetComponent<AI>();
             playerScript.obstacleScript = obstacleScript;
 			obstacleScript.setupManager (playerScript);
 
             initBoard();
+        
         }
 
         void initBoard()
@@ -30,21 +31,22 @@ namespace Chimera
             boardScript.SetupScene();
             playerScript.SetupPlayers();
             obstacleScript.SetupObstacles();
-            aiScript.SetupAI();
-            setupPawns();
+            //aiScript.SetupAI();
+            //setupPawns();
         }
 
-        void setupPawns()
+        /*void setupPawns()
         {
             aiScript.Players = playerScript.Players;
-        }
+            aiScript.Pawns = playerScript.Pawns;
+        }*/
 
         // Update is called once per frame
         void Update()
         {
             playerScript.UpdatePlayers();
 			obstacleScript.UpdateObstacle();
-            aiScript.UpdateAIs();
+            //aiScript.UpdateAIs();
         }
     }
 }
