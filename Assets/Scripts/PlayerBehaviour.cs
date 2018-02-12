@@ -7,7 +7,7 @@ namespace Chimera
 	/*Aswin + Ciara: movement funcitonality 06/12/2017 */
 	internal class PlayerBehaviour : MonoBehaviour
 	{
-		public Vector3 target;
+        public Vector3 target;
 		public Vector3 origin;
         public int restMove;
         public bool meetObsracle = false;
@@ -21,13 +21,13 @@ namespace Chimera
 
             if (Input.GetKeyDown("up") && !upLock)
             {
-                if (ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y + 1) && restMove != 1)
+                if (ObstacleManager.CheckObstacle((int)transform.position.x, (int)transform.position.y + 1) && restMove != 1)
                 {
                     meetObsracle = true;
                 }
                 target.y = Mathf.Round(transform.position.y) + 1;
                 target.x = Mathf.Round(transform.position.x);
-                if (tileCheck((int)target.x, (int)target.y) && (!ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y + 1) || (ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y + 1) && restMove == 1)))
+                if (tileCheck((int)target.x, (int)target.y) && (!ObstacleManager.CheckObstacle((int)transform.position.x, (int)transform.position.y + 1) || (ObstacleManager.CheckObstacle((int)transform.position.x, (int)transform.position.y + 1) && restMove == 1)))
                 {
                     transform.position = target;
                     verticalMoves++;
@@ -43,13 +43,13 @@ namespace Chimera
             }
             if (Input.GetKeyDown("down") && !downLock)
             {
-                if (ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y - 1) && restMove != 1)
+                if (ObstacleManager.CheckObstacle((int)transform.position.x, (int)transform.position.y - 1) && restMove != 1)
                 {
                     meetObsracle = true;
                 }
                 target.y = Mathf.Round(transform.position.y) - 1;
                 target.x = Mathf.Round(transform.position.x);
-                if (tileCheck((int)target.x, (int)target.y) && (!ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y - 1) || (ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y - 1) && restMove == 1)))
+                if (tileCheck((int)target.x, (int)target.y) && (!ObstacleManager.CheckObstacle((int)transform.position.x, (int)transform.position.y - 1) || (ObstacleManager.CheckObstacle((int)transform.position.x, (int)transform.position.y - 1) && restMove == 1)))
                 {
                     transform.position = target;
                     verticalMoves++;
@@ -66,13 +66,13 @@ namespace Chimera
             }
             if (Input.GetKeyDown("right"))
             {
-                if (ObstacleManager.CheckObstacleTile((int)transform.position.x + 1, (int)transform.position.y) && restMove != 1)
+                if (ObstacleManager.CheckObstacle((int)transform.position.x + 1, (int)transform.position.y) && restMove != 1)
                 {
                     meetObsracle = true;
                 }
                 target.x = Mathf.Round(transform.position.x) + 1;
                 target.y = Mathf.Round(transform.position.y);
-                if (tileCheck((int)target.x, (int)target.y) && (!ObstacleManager.CheckObstacleTile((int)transform.position.x + 1, (int)transform.position.y) || (ObstacleManager.CheckObstacleTile((int)transform.position.x + 1, (int)transform.position.y) && restMove == 1)))
+                if (tileCheck((int)target.x, (int)target.y) && (!ObstacleManager.CheckObstacle((int)transform.position.x + 1, (int)transform.position.y) || (ObstacleManager.CheckObstacle((int)transform.position.x + 1, (int)transform.position.y) && restMove == 1)))
                 {
                     transform.position = target;
                     horizontalMoves++;
@@ -82,13 +82,13 @@ namespace Chimera
             }
             if (Input.GetKeyDown("left"))
             {
-                if (ObstacleManager.CheckObstacleTile((int)transform.position.x - 1, (int)transform.position.y + 1) && restMove != 1)
+                if (ObstacleManager.CheckObstacle((int)transform.position.x - 1, (int)transform.position.y + 1) && restMove != 1)
                 {
                     meetObsracle = true;
                 }
                 target.x = Mathf.Round(transform.position.x) - 1;
                 target.y = Mathf.Round(transform.position.y);
-                if (tileCheck((int)target.x, (int)target.y) && (!ObstacleManager.CheckObstacleTile((int)transform.position.x - 1, (int)transform.position.y) || (ObstacleManager.CheckObstacleTile((int)transform.position.x - 1, (int)transform.position.y) && restMove == 1)))
+                if (tileCheck((int)target.x, (int)target.y) && (!ObstacleManager.CheckObstacle((int)transform.position.x - 1, (int)transform.position.y) || (ObstacleManager.CheckObstacle((int)transform.position.x - 1, (int)transform.position.y) && restMove == 1)))
                 {
                     transform.position = target;
                     horizontalMoves--;

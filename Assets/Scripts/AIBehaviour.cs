@@ -20,10 +20,10 @@ namespace Chimera
             //go to (x, y, z)
             for (int i = moves; i > 0; i--)
             {
-                /*if (ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y + 1) && restMove != 1)
+                if (ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y + 1) && restMove != 1)
                 {
                     meetObsracle = true;
-                }*/
+                }
 
                 if (tileCheck((int)Mathf.Round(transform.position.x), (int)Mathf.Round(transform.position.y) + 1) && (!ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y + 1) || (ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y + 1) && restMove == 1)))
                 {

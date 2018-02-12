@@ -7,7 +7,7 @@ namespace Chimera{
 
 		public PlayerManager manager;
 	    public GameObject[] Obstacles;
-		public GameObject[] Obstacles_array;
+		public static GameObject[] Obstacles_array;
 		public int obstacle_Index;
 		bool move = false;
 		private bool obstacle_moving = false;
@@ -66,7 +66,7 @@ namespace Chimera{
 	        }  
 	    }
 			
-        public bool CheckObstacle(int x, int y)
+        public static bool CheckObstacle(int x, int y)
         {
             foreach(GameObject obstacle in Obstacles_array)
             {

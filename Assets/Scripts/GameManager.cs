@@ -9,6 +9,7 @@ namespace Chimera
         public BoardManager boardScript;
         public PlayerManager playerScript;
         public ObstacleManager obstacleScript;
+       // public PlayerBehaviour playerMovement;
         //public AI aiScript;
 
         // Use this for initialization
@@ -17,9 +18,11 @@ namespace Chimera
             boardScript = GetComponent<BoardManager>();
             playerScript = GetComponent<PlayerManager>();
             obstacleScript = GetComponent<ObstacleManager>();
+            //playerMovement = GetComponent<PlayerBehaviour>();
             //aiScript = GetComponent<AI>();
             playerScript.obstacleScript = obstacleScript;
-			obstacleScript.setupManager (playerScript);
+            //playerMovement.obstacleScript = obstacleScript;
+            obstacleScript.setupManager (playerScript);
 
             initBoard();
         

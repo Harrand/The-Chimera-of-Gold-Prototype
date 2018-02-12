@@ -209,7 +209,7 @@ namespace Chimera
                     move = false;
                     Pawns[index].GetComponent<PlayerBehaviour>().resetMoves();
                     moved = 0;
-                    OnObstacles[index] = obstacleScript.CheckObstacle((int)Pawns[index].transform.position.x, (int)Pawns[index].transform.position.y);
+                    OnObstacles[index] = ObstacleManager.CheckObstacle((int)Pawns[index].transform.position.x, (int)Pawns[index].transform.position.y);
                     nextPlayer();
                 }
 
@@ -267,7 +267,7 @@ namespace Chimera
                     aimove = false;
                     Pawns[index].GetComponent<AIBehaviour>().resetMoves();
                     moved = 0;
-                    OnObstacles[index] = obstacleScript.CheckObstacle((int)Pawns[index].transform.position.x, (int)Pawns[index].transform.position.y);
+                    OnObstacles[index] = ObstacleManager.CheckObstacle((int)Pawns[index].transform.position.x, (int)Pawns[index].transform.position.y);
                     nextPlayer();
                 }
 
