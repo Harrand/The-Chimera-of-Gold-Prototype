@@ -108,7 +108,12 @@ namespace Chimera
             meetObsracle = false;
         }
 
-		bool tileCheck(int x, int y)
+        public bool isAiMoves()
+        {
+            return true;
+        }
+
+        bool tileCheck(int x, int y)
 		{
 			if(y == -1 || x == -1 || y == 19 || x == 21)
 			{

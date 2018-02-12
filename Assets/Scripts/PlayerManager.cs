@@ -29,6 +29,7 @@ namespace Chimera
         int moves = 0;
         int moved = 0;
         bool move = false;
+        bool aimove = false;
         Vector3 end = new Vector3(10, 17, 0f);
 
         public int human = 4;
@@ -71,18 +72,33 @@ namespace Chimera
                     {
                         Debug.Log(index);
                         GameObject Pawn = Instantiate(Players[index], new Vector3(x, -1, 0f), Quaternion.identity) as GameObject;
-                        if (pawnsIndex < human * 5)
-                        {
-                            Pawn.AddComponent<PlayerBehaviour>();
-                            Pawn.GetComponent<PlayerBehaviour>().origin.x = x;
-                            Pawn.GetComponent<PlayerBehaviour>().origin.y = -1;
-                        }
-                        else
+
+                        /*if (pawnsIndex >= human * 5)
                         {
                             Pawn.AddComponent<AIBehaviour>();
                             Pawn.GetComponent<AIBehaviour>().origin.x = x;
                             Pawn.GetComponent<AIBehaviour>().origin.y = -1;
                         }
+                        Pawn.AddComponent<PlayerBehaviour>();
+                        Pawn.GetComponent<PlayerBehaviour>().origin.x = x;
+                        Pawn.GetComponent<PlayerBehaviour>().origin.y = -1;*/
+                        if (pawnsIndex < human * 5)
+                        {
+                            //GameObject Pawn = Instantiate(Players[index], new Vector3(x, -1, 0f), Quaternion.identity) as GameObject;
+                            Pawn.AddComponent<PlayerBehaviour>();
+                            Pawn.GetComponent<PlayerBehaviour>().origin.x = x;
+                            Pawn.GetComponent<PlayerBehaviour>().origin.y = -1;
+                            //Pawns[pawnsIndex] = Pawn;
+                        }
+                        else
+                        {
+                            //GameObject Pawn = Instantiate(Players[index], new Vector3(x, -1, 0f), Quaternion.identity) as GameObject;
+                            Pawn.AddComponent<AIBehaviour>();
+                            Pawn.GetComponent<AIBehaviour>().origin.x = x;
+                            Pawn.GetComponent<AIBehaviour>().origin.y = -1;
+                            //Pawns[pawnsIndex] = Pawn;
+                        }                        
+
                         Pawns[pawnsIndex] = Pawn;
 
 
@@ -155,12 +171,12 @@ namespace Chimera
         {
             
             /*Aswin + Ciara: Limited movement based on dice roll 06/12/2017*/
-            if (move)
+            if (move && !aimove)
             {
                 index = choosePawn(turn);
                 ring.transform.position = Pawns[index].GetComponent<PlayerBehaviour>().transform.position;
                 moved = Pawns[index].GetComponent<PlayerBehaviour>().Movement(index);
-                Debug.Log("Moving pawn");
+                Debug.Log("Human Moving pawn");
                 Pawns[index].GetComponent<PlayerBehaviour>().restMove = moves - moved;
                 //If on the final tile and can finish (Roll a one or have one left to move)
                 if ((Pawns[index].GetComponent<PlayerBehaviour>().transform.position.x == 10 && Pawns[index].GetComponent<PlayerBehaviour>().transform.position.y == 18) && (moves - moved) == 1)
@@ -188,16 +204,81 @@ namespace Chimera
                     //Checks if colliding 
                     for(int i = 0; i < Pawns.Length; i++)
                     {
-                        if(Pawns[i] != null)
+                        if(Pawns[i] != null && Pawns[i].GetComponent<AIBehaviour>() == null)
                         {
-                            if (i != index && (Pawns[index].GetComponent<PlayerBehaviour>().transform.position == Pawns[i].GetComponent<PlayerBehaviour>().transform.position))
+                            if (Pawns[index].GetComponent<PlayerBehaviour>() != null && i != index && (Pawns[index].GetComponent<PlayerBehaviour>().transform.position == Pawns[i].GetComponent<PlayerBehaviour>().transform.position))
                             {
                                 Pawns[i].GetComponent<PlayerBehaviour>().transform.position = Pawns[i].GetComponent<PlayerBehaviour>().origin;
                             }
                         }
+                        if (Pawns[i] != null && Pawns[i].GetComponent<AIBehaviour>() != null)
+                        {
+                            if (Pawns[index].GetComponent<AIBehaviour>() != null && i != index && (Pawns[index].GetComponent<AIBehaviour>().transform.position == Pawns[i].GetComponent<AIBehaviour>().transform.position))
+                            {
+                                Pawns[i].GetComponent<AIBehaviour>().transform.position = Pawns[i].GetComponent<AIBehaviour>().origin;
+                            }
+                        }
                     }
                     move = false;
-					Pawns[index].GetComponent<PlayerBehaviour>().resetMoves();
+                    Pawns[index].GetComponent<PlayerBehaviour>().resetMoves();
+                    moved = 0;
+                    OnObstacles[index] = obstacleScript.CheckObstacle((int)Pawns[index].transform.position.x, (int)Pawns[index].transform.position.y);
+                    nextPlayer();
+                }
+
+            }
+            else if(move && aimove)
+            {
+                index = choosePawn(turn);
+                ring.transform.position = Pawns[index].GetComponent<AIBehaviour>().transform.position;
+                moved = Pawns[index].GetComponent<AIBehaviour>().Movement(index, moves);
+                Debug.Log("AI Moving pawn");
+                Pawns[index].GetComponent<AIBehaviour>().restMove = moves - moved;
+                //If on the final tile and can finish (Roll a one or have one left to move)
+                if ((Pawns[index].GetComponent<AIBehaviour>().transform.position.x == 10 && Pawns[index].GetComponent<AIBehaviour>().transform.position.y == 18) && (moves - moved) == 1)
+                {
+                    Pawns[index].GetComponent<AIBehaviour>().transform.position = end;
+                    removePawn(Pawns[index]);
+                    Pawns[index] = null;
+                    addPoint(playerTurn);
+                    if (checkWinner())
+                    {
+                        Debug.Log("WINNER WINNER CHICKEN DINNER!!!");
+                    }
+
+                    move = false;
+                    aimove = false;
+                    moved = 0;
+
+                    nextPlayer();
+
+                    ring.transform.position = Pawns[choosePawn(0)].GetComponent<AIBehaviour>().transform.position;
+                }
+
+                if (moved >= moves || Pawns[index].GetComponent<AIBehaviour>().meetObsracle)
+                {
+                    Debug.Log("into if move");
+                    //Checks if colliding 
+                    for (int i = 0; i < Pawns.Length; i++)
+                    {
+                        if (Pawns[i] != null && Pawns[i].GetComponent<AIBehaviour>() == null)
+                        {
+                            if (Pawns[index].GetComponent<PlayerBehaviour>() != null && i != index && (Pawns[index].GetComponent<PlayerBehaviour>().transform.position == Pawns[i].GetComponent<PlayerBehaviour>().transform.position))
+                            {
+                                Pawns[i].GetComponent<PlayerBehaviour>().transform.position = Pawns[i].GetComponent<PlayerBehaviour>().origin;
+                            }
+                        }
+                        if (Pawns[i] != null && Pawns[i].GetComponent<AIBehaviour>() != null)
+                        {
+                            if (Pawns[index].GetComponent<AIBehaviour>() != null && i != index && (Pawns[index].GetComponent<AIBehaviour>().transform.position == Pawns[i].GetComponent<AIBehaviour>().transform.position))
+                            {
+                                Pawns[i].GetComponent<AIBehaviour>().transform.position = Pawns[i].GetComponent<AIBehaviour>().origin;
+                            }
+                        }
+                    }
+                    move = false;
+                    aimove = false;
+                    Pawns[index].GetComponent<AIBehaviour>().resetMoves();
                     moved = 0;
                     OnObstacles[index] = obstacleScript.CheckObstacle((int)Pawns[index].transform.position.x, (int)Pawns[index].transform.position.y);
                     nextPlayer();
@@ -206,7 +287,7 @@ namespace Chimera
             }
             else
             {
-                //Debug.Log("Choose pawn, press space when ready to move");
+                Debug.Log("Choose pawn, press space when ready to move");
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                     turn = 0;
                 else if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -221,10 +302,26 @@ namespace Chimera
                 {
 
                     move = true;
+                    if (Pawns[choosePawn(turn)].GetComponent<AIBehaviour>() == null)
+                    {
+                        aimove = false;
+                    }
+                    else
+                    {
+                        aimove = true;
+                    }
                     moves = Dice.Roll();
                     dice.GetComponent<Dice>().Render(moves, -10, -1, 10, 10);
                 }
-                ring.transform.position = Pawns[choosePawn(turn)].GetComponent<PlayerBehaviour>().transform.position;
+                if (Pawns[choosePawn(turn)].GetComponent<AIBehaviour>() == null)
+                {
+                    ring.transform.position = Pawns[choosePawn(turn)].GetComponent<PlayerBehaviour>().transform.position;
+                }
+                else
+                {
+                    ring.transform.position = Pawns[choosePawn(turn)].GetComponent<AIBehaviour>().transform.position;
+                }
+                
                 //Debug.Log(turn);
             }
         }

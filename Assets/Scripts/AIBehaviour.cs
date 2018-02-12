@@ -53,6 +53,9 @@ namespace Chimera
                     horizontalMoves++;
                     continue;
                 }
+                else
+                    target = transform.position;
+                    continue;
                 //target = transform.position;
                 //return ((Mathf.Abs(horizontalMoves)) + (Mathf.Abs(verticalMoves)));
             }
@@ -66,6 +69,11 @@ namespace Chimera
             upLock = false;
             downLock = false;
             meetObsracle = false;
+        }
+
+        public bool isAiMoves()
+        {
+            return true;
         }
 
         bool tileCheck(int x, int y)
