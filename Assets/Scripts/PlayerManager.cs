@@ -73,30 +73,17 @@ namespace Chimera
                         Debug.Log(index);
                         GameObject Pawn = Instantiate(Players[index], new Vector3(x, -1, 0f), Quaternion.identity) as GameObject;
 
-                        /*if (pawnsIndex >= human * 5)
-                        {
-                            Pawn.AddComponent<AIBehaviour>();
-                            Pawn.GetComponent<AIBehaviour>().origin.x = x;
-                            Pawn.GetComponent<AIBehaviour>().origin.y = -1;
-                        }
-                        Pawn.AddComponent<PlayerBehaviour>();
-                        Pawn.GetComponent<PlayerBehaviour>().origin.x = x;
-                        Pawn.GetComponent<PlayerBehaviour>().origin.y = -1;*/
                         if (pawnsIndex < human * 5)
                         {
-                            //GameObject Pawn = Instantiate(Players[index], new Vector3(x, -1, 0f), Quaternion.identity) as GameObject;
                             Pawn.AddComponent<PlayerBehaviour>();
                             Pawn.GetComponent<PlayerBehaviour>().origin.x = x;
                             Pawn.GetComponent<PlayerBehaviour>().origin.y = -1;
-                            //Pawns[pawnsIndex] = Pawn;
                         }
                         else
                         {
-                            //GameObject Pawn = Instantiate(Players[index], new Vector3(x, -1, 0f), Quaternion.identity) as GameObject;
                             Pawn.AddComponent<AIBehaviour>();
                             Pawn.GetComponent<AIBehaviour>().origin.x = x;
                             Pawn.GetComponent<AIBehaviour>().origin.y = -1;
-                            //Pawns[pawnsIndex] = Pawn;
                         }                        
 
                         Pawns[pawnsIndex] = Pawn;
@@ -298,7 +285,7 @@ namespace Chimera
                     turn = 3;
                 else if (Input.GetKeyDown(KeyCode.Alpha5))
                     turn = 4;
-                else if (Input.GetKeyDown(KeyCode.Space))
+                else if (Input.GetKeyDown(KeyCode.Space) || Pawns[choosePawn(turn)].GetComponent<AIBehaviour>() != null)
                 {
 
                     move = true;
