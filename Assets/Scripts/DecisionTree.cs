@@ -39,21 +39,21 @@ namespace Chimera
 
 			while (waitList.Count > 0) 
 			{
-				var current = waitList.Dequeue ();
+				Vector2 current = waitList.Dequeue ();
 				Vector2 neighbour = new Vector2 ();
 
-				Console.WriteLine (current.x, current.y);  //use to debug
+				Debug.Log("x position = " + current.x + "  y position = " + current.y);  //use to debug
 
 				visited.Add(current);  // add the current to the visited list
 
 				for(int i = 0; i < 4; ++i){  
-					neighbour.x = current.x+dir[i][0]; //search the neighbour node 
-					neighbour.y = current.y+dir[i][1];
+					neighbour.x = current.x+dir[i,0]; //search the neighbour node 
+					neighbour.y = current.y+dir[i,1];
 
 					if (neighbour == goalposition) 
 					{
 						Debug.Log ("We found the goal!");
-						return Vector2.Distance (goalposition, startPosition); // when we found the goal
+						return (int)Vector2.Distance (goalposition, startPosition); // when we found the goal
 					}
 
 					if ((isvalid(neighbour)) && !visited.Contains(neighbour))
@@ -68,17 +68,14 @@ namespace Chimera
 
 
 			}
-
-
-
-
+			return -1;
 
 		}
 
 		public bool isvalid(Vector2 position) // to check if the node is a tile.
 		{
-			int x = position.x;
-			int y = position.y;
+			int x = (int)position.x;
+			int y = (int)position.y;
 
 			if (y == 0)
 			{
@@ -86,7 +83,7 @@ namespace Chimera
 			}
 			else if(y == 1)
 			{
-				if (x == 0 || x == 4 || x == 8|| x == 12 || x == 16 || x == columns-1)
+				if (x == 0 || x == 4 || x == 8|| x == 12 || x == 16 || x == 19)
 					return true;
 				else
 					return false;
