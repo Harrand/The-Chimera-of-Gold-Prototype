@@ -305,7 +305,6 @@ MonoBehaviour:
   manager: {fileID: 0}
   Obstacles:
   - {fileID: 1812585245509068, guid: cbf1260afaa181c45b8d5552171e5287, type: 2}
-  Obstacles_array: []
   obstacle_Index: 0
 --- !u!1 &1127943804
 GameObject:

@@ -14,11 +14,29 @@ namespace Chimera
         int verticalMoves = 0;
         bool upLock = false;
         bool downLock = false;
+        public DecisionTree treescript;
+
+        public void setupDecisionTree(DecisionTree tree)
+        {
+            treescript = tree;
+        }
 
         public int Movement(int index, int moves)
         {
             //go to (x, y, z)
-            for (int i = moves; i > 0; i--)
+            Vector2 endPosition = new Vector2();
+            Vector2 startPosition = new Vector2();
+
+            startPosition.x = transform.position.x;
+            startPosition.y = transform.position.y;
+
+            endPosition = treescript.BFS_Find_Path(moves, startPosition);
+
+            target.x = endPosition.x;
+            target.y = endPosition.y;
+            transform.position = target;
+
+            /*for (int i = moves; i > 0; i--)
             {
                 if (ObstacleManager.CheckObstacleTile((int)transform.position.x, (int)transform.position.y + 1) && restMove != 1)
                 {
@@ -58,25 +76,22 @@ namespace Chimera
                     continue;
                 //target = transform.position;
                 //return ((Mathf.Abs(horizontalMoves)) + (Mathf.Abs(verticalMoves)));
-            }
+            }*/
+
             return moves;
         }
 
-        public void resetMoves()
+        /*public void resetMoves()
         {
-            horizontalMoves = 0;
-            verticalMoves = 0;
-            upLock = false;
-            downLock = false;
-            meetObsracle = false;
-        }
+             horizontalMoves = 0;
+             verticalMoves = 0;
+             upLock = false;
+             downLock = false;
+             meetObsracle = false;
+            treescript.resetPath();
+        }*/
 
-        public bool isAiMoves()
-        {
-            return true;
-        }
-
-        bool tileCheck(int x, int y)
+        /*bool tileCheck(int x, int y)
         {
             if (y == -1 || x == -1 || y == 19 || x == 21)
             {
@@ -183,7 +198,7 @@ namespace Chimera
             }
             else
                 return false;
-        }
+        }*/
 
     }
 }
