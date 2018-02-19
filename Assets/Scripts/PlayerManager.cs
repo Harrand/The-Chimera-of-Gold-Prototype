@@ -220,7 +220,6 @@ namespace Chimera
                 ring.transform.position = Pawns[index].GetComponent<DecisionTree>().transform.position;
                 moved = Pawns[index].GetComponent<DecisionTree>().Movement(index, moves);
                 Debug.Log("AI Moving pawn");
-                Pawns[index].GetComponent<DecisionTree>().restMove = moves - moved;
                 //If on the final tile and can finish (Roll a one or have one left to move)
                 if ((Pawns[index].GetComponent<DecisionTree>().transform.position.x == 10 && Pawns[index].GetComponent<DecisionTree>().transform.position.y == 18) && (moves - moved) == 1)
                 {
@@ -242,7 +241,7 @@ namespace Chimera
                     ring.transform.position = Pawns[choosePawn(0)].GetComponent<DecisionTree>().transform.position;
                 }
 
-                if (moved >= moves || Pawns[index].GetComponent<DecisionTree>().meetObsracle)
+                if (moved >= moves)
                 {
                     Debug.Log("into if move");
                     //Checks if colliding 

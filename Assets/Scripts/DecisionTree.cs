@@ -11,20 +11,43 @@ namespace Chimera
     {
         public Vector3 target;
         public Vector3 origin;
-        public int restMove;
-        public bool meetObsracle = false;
-        int horizontalMoves = 0;
-        int verticalMoves = 0;
-        bool upLock = false;
-        bool downLock = false;
         int value;
 		public ObstacleManager obstaclescript;
-        //public List<Vector2> path = new List<Vector2>();
 
         public DecisionTree()
 		{
 			
 		}
+
+        class Node
+        {
+            public Vector2 position;
+            public int depth = -1;
+            public Node(int depth, Vector2 position)
+            {
+                this.depth = depth;
+                this.position = position;
+            }
+
+            public Node()
+            {
+
+            }
+
+            public Vector2 Getposition()
+            {
+                return position;
+            }
+
+            public void SetPosition(Vector2 arg)
+            {
+                this.position = arg;
+            }
+            public void SetDepth(int arg)
+            {
+                this.depth = arg;
+            }
+        }
 
         public int Movement(int index, int moves)
         {
@@ -53,55 +76,66 @@ namespace Chimera
 		public Vector2 BFS_Find_Path(int moves, Vector2 startPosition)
 		{
             // four direction: up,right,down,left 
-            int[,] dir = new int[4,2]
-			{  
-				{0, 1}, {1, 0},  
-				{0, -1}, {-1, 0}  
-			};
-
-            int mycount = 1;
-
+            int[,] dir = new int[4, 2]
+            {
+                {0, 1}, {1, 0},
+                {0, -1}, {-1, 0}
+            };
+            int maxDepth = 0;
+            int tempMoves = moves;
 			var path = new List<Vector2> ();
 			var visited = new HashSet<Vector2> (); //store node that has been visited
             var endPosition = new Vector2();
 
-			var waitList = new Queue<Vector2> ();  //store node that need to be visited
-			waitList.Enqueue (startPosition);
-            while (waitList.Count > 0 && moves > 0) 
+			var waitList = new Queue<Node> ();  //store node that need to be visited
+
+            Node start = new Node(0, startPosition);
+
+			waitList.Enqueue (start);
+            while (waitList.Count > 0 && moves >= 0) 
 			{
-				Vector2 current = waitList.Dequeue ();
-				Vector2 neighbour = new Vector2 ();
+                Node current = waitList.Dequeue ();
+                Vector2 tem = new Vector2();
+                //Debug.Log("x position = " + current.x + "  y position = " + current.y);  //use to debug
 
-				//Debug.Log("x position = " + current.x + "  y position = " + current.y);  //use to debug
+                visited.Add(current.Getposition());  // add the current to the visited list
+                Debug.Log("Visited: " + current.Getposition().x + ", " + current.Getposition().y);
+                moves = tempMoves - maxDepth;
 
-				visited.Add(current);  // add the current to the visited list
-                moves--;
-				for(int i = 0; i < 4; ++i){
-                    mycount = mycount + 1;
+                for (int i = 0; i < 4; ++i){
+                    Node neighbour = new Node();
 
-					neighbour.x = current.x+dir[i,0]; //search the neighbour node 
-					neighbour.y = current.y+dir[i,1];
+                    tem.x = (current.Getposition().x) + dir[i,0]; //search the neighbour node 
+                    tem.y = (current.Getposition().y) + dir[i,1];
+                    Debug.Log("i = " + i + "; Temp Neighbor Position: " + tem.x + ", " + tem.y);
 
-                    Debug.Log("Before valid check!");
+                    neighbour.SetPosition(tem);
+                    neighbour.SetDepth(0);
 
-                    if ((isvalid(neighbour)) && !visited.Contains(neighbour))
+                    //neighbour.x = current.x+dir[i,0]; //search the neighbour node 
+                    //neighbour.y = current.y+dir[i,1];
+                    
+                    Debug.Log("Rest moves: " + moves + "  Max depth: " + maxDepth + "  Current Position: " + current.Getposition().x + ", " + current.Getposition().y);
+
+                    if ((isvalid(neighbour.Getposition())) && !visited.Contains(neighbour.Getposition()))
 					{
-                        Debug.Log("Hello Im valid! Position: " + neighbour.x + ", " + neighbour.y);
-                        if (ObstacleManager.CheckObstacle((int)neighbour.x,(int)neighbour.y))
+                        //Debug.Log("Hello Im valid! Position: " + neighbour.x + ", " + neighbour.y);
+                        if (ObstacleManager.CheckObstacle((int)neighbour.Getposition().x,(int)neighbour.Getposition().y))
 						{
-							if(moves!=0)
+							if(tempMoves - current.depth != 1)
 							{
-								if (!path.Contains (current)) 
+								if (!path.Contains (current.Getposition())) 
 								{
-									path.Add(current);
-								}
+									path.Add(current.Getposition());
+                                    Debug.Log("I meet the obstacle oh so sad!");
+                                }
 								continue;
 							}
-							else if(moves == 0)
+							else if(tempMoves - current.depth == 1)
 							{
-								if (!path.Contains (neighbour)) 
+								if (!path.Contains (neighbour.Getposition())) 
 								{
-									path.Add(neighbour);
+									path.Add(neighbour.Getposition());
 								}
 								continue;
 							}
@@ -110,22 +144,31 @@ namespace Chimera
 								Debug.Log("moves less than 0!!!!");	
 							}
 						}
-						if (moves == 0) 
+						if (tempMoves - current.depth == 1) 
 						{
-							if (!path.Contains(neighbour)) 
+							if (!path.Contains(neighbour.Getposition())) 
 							{
-								path.Add(neighbour);
+								path.Add(neighbour.Getposition());
 							}
 							continue;
 						}
 						else
 						{
-							waitList.Enqueue(neighbour);  //join the neighbour to the waitList to wait for next search
+                            Debug.Log("Neighbour: " + neighbour.depth);
+                            neighbour.SetDepth(current.depth + 1);
+                            //maxDepth = neighbour.depth;
+                            Debug.Log("After setting Neighbour: " + neighbour.depth);
+                            waitList.Enqueue(neighbour);  //join the neighbour to the waitList to wait for next search
                         }
 					}  
 				}
-
-				Debug.Log("we can't find the goal!!!!!!");
+             
+                foreach(var n in waitList)
+                {
+                    if(n.depth > maxDepth)
+                        maxDepth = n.depth;
+                    //Debug.Log("Temp depth: " + maxDepth);
+                }
 			}
 
             endPosition = choosePath(path);
@@ -176,10 +219,6 @@ namespace Chimera
 				}
 
 				Debug.Log("we can't find the goal!!!!!!");
-
-
-
-
 			}
 			return -1;
 
