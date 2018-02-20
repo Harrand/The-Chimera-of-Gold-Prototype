@@ -70,7 +70,7 @@ namespace Chimera
                 {
                     while (pawnCount < 5)
                     {
-                        Debug.Log(index);
+ //                        Debug.Log(index);
                         GameObject Pawn = Instantiate(Players[index], new Vector3(x, -1, 0f), Quaternion.identity) as GameObject;
 
                         if (pawnsIndex < human * 5)
@@ -114,7 +114,7 @@ namespace Chimera
         {
             int a = playerTurn * 5 + i;
             int x = 0;
-            Debug.Log(a);
+           // Debug.Log(a);
             while(Pawns[a] == null)
             {
                 a = playerTurn * 5 + x;
@@ -163,7 +163,7 @@ namespace Chimera
                 index = choosePawn(turn);
                 ring.transform.position = Pawns[index].GetComponent<PlayerBehaviour>().transform.position;
                 moved = Pawns[index].GetComponent<PlayerBehaviour>().Movement(index);
-                Debug.Log("Human Moving pawn");
+//                Debug.Log("Human Moving pawn");
                 Pawns[index].GetComponent<PlayerBehaviour>().restMove = moves - moved;
                 //If on the final tile and can finish (Roll a one or have one left to move)
                 if ((Pawns[index].GetComponent<PlayerBehaviour>().transform.position.x == 10 && Pawns[index].GetComponent<PlayerBehaviour>().transform.position.y == 18) && (moves - moved) == 1)
@@ -273,7 +273,7 @@ namespace Chimera
             }
             else
             {
-                Debug.Log("Choose pawn, press space when ready to move");
+//                Debug.Log("Choose pawn, press space when ready to move");
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                     turn = 0;
                 else if (Input.GetKeyDown(KeyCode.Alpha2))

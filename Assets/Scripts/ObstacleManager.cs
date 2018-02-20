@@ -75,6 +75,8 @@ namespace Chimera{
             }
             return false;
         }
+
+
 			
         public void UpdateObstacle()
 		{

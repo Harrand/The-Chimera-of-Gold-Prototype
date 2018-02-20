@@ -184,42 +184,53 @@ namespace Chimera
 			{  
 				{0, 1}, {1, 0},  
 				{0, -1}, {-1, 0}  
-			}; 
-				
+			};
+		
 			Vector2 goalposition = new Vector2 (10, 18);
 
 			var visited = new HashSet<Vector2> (); //store node that has been visited
 
-			var waitList = new Queue<Vector2> ();  //store node that need to be visited
-			waitList.Enqueue (startPosition);
+			var waitList = new Queue<Node> ();  //store node that need to be visited
+			Node start = new Node(0, startPosition);
+			waitList.Enqueue (start);
 
 			while (waitList.Count > 0) 
 			{
-				Vector2 current = waitList.Dequeue ();
-				Vector2 neighbour = new Vector2 ();
+				Node current = waitList.Dequeue();
+				Vector2 tem = new Vector2 ();
 
 				//Debug.Log("x position = " + current.x + "  y position = " + current.y);  //use to debug
 
-				visited.Add(current);  // add the current to the visited list
+				visited.Add(current.Getposition());  // add the current to the visited list
 
-				for(int i = 0; i < 4; ++i){  
-					neighbour.x = current.x+dir[i,0]; //search the neighbour node 
-					neighbour.y = current.y+dir[i,1];
+				for(int i = 0; i < 4; ++i){
+					Node neighbour = new Node();
+					tem.x = (current.Getposition().x)+dir[i,0]; //search the neighbour node 
+					tem.y = (current.Getposition().y)+dir[i,1];
 
-					if (neighbour == goalposition) 
+					neighbour.SetPosition(tem);
+					neighbour.SetDepth(0);
+
+					if ((isvalid(neighbour.Getposition())) && !visited.Contains(neighbour.Getposition()))
 					{
-						Debug.Log ("We found the goal!");
-						return (int)Vector2.Distance (goalposition, startPosition); // when we found the goal
-					}
-
-					if ((isvalid(neighbour)) && !visited.Contains(neighbour))
-					{  
+						neighbour.SetDepth(current.depth + 1);
+						if(ObstacleManager.CheckObstacle((int)neighbour.Getposition().x,(int)neighbour.Getposition().y))
+						{
+							neighbour.depth += 20; //this means that if there is an obstacle the value should plus 20
+						}
 						waitList.Enqueue(neighbour);  //join the neighbour to the waitList to wait for next search
 					}  
-				}
 
-				Debug.Log("we can't find the goal!!!!!!");
+					if (neighbour.Getposition() == goalposition) 
+					{
+						Debug.Log ("We found the goal! distance: " + neighbour.depth);
+						Debug.Log (startPosition);
+						return neighbour.depth; // when we found the goal
+					}
+				}
+					
 			}
+			Debug.Log("we can't find the goal!!!!!!");
 			return -1;
 
 		}
@@ -231,7 +242,7 @@ namespace Chimera
             Vector2 tmpPosition = new Vector2();
             int distence_to_goal = -1;
             int score = 0;
-            int tmpScore = int.MinValue;
+			int tmpScore = int.MaxValue;
 
             for (int i = 0; i < path.Count; i++)
             {
@@ -240,7 +251,7 @@ namespace Chimera
                 distence_to_goal = BFS_Assese_Value(tmpPosition);               
                 Debug.Log("Distence to the goal: " + distence_to_goal);
 
-                score = score - distence_to_goal;
+                score = distence_to_goal;
                 Debug.Log("Score: " + score);
 
                 if (distence_to_goal == -1)
@@ -254,7 +265,7 @@ namespace Chimera
             
             foreach(var emt in myPath)
             {
-                if(emt.Value > tmpScore)
+                if(emt.Value < tmpScore)
                 {
                     endPosition = emt.Key;
                     tmpScore = emt.Value;
