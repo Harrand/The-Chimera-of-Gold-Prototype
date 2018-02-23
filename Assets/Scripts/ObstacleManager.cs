@@ -76,6 +76,15 @@ namespace Chimera{
             return false;
         }
 
+		public static GameObject GetObstacleByPosition(Vector2 para)
+		{
+			foreach(GameObject obstacle in Obstacles_array)
+			{
+				if (obstacle.transform.position.x == para.x && obstacle.transform.position.y == para.y)
+					return obstacle;
+			}
+			return null;
+		}
 
 			
         public void UpdateObstacle()

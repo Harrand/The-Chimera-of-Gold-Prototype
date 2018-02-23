@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /* this script is written by Yutian and Zibo */
 
@@ -12,12 +13,6 @@ namespace Chimera
         public Vector3 target;
         public Vector3 origin;
         int value;
-		public ObstacleManager obstaclescript;
-
-        public DecisionTree()
-		{
-			
-		}
 
         class Node
         {
@@ -64,13 +59,43 @@ namespace Chimera
             target.x = endPosition.x;
             target.y = endPosition.y;
             transform.position = target;
+			GameObject currentObstacle = null;
+
+			/*  let AI have the ability to move obstacles  */
+			if(ObstacleManager.CheckObstacle((int)target.x,(int)target.y))
+			{
+				currentObstacle = ObstacleManager.GetObstacleByPosition (target);
+			}
+
+			if (currentObstacle != null) 
+			{
+				ObstacleEasyMovement(currentObstacle);
+			}
+
             return moves;
         }
 
-            public DecisionTree(ObstacleManager obstaclescript)
+		/* Obstacle movement for easy mode */
+		void ObstacleEasyMovement (GameObject obstacle)
 		{
-			this.obstaclescript = obstaclescript;
+			Vector2 posi = new Vector2(Random.Range(0,20),Random.Range(1,18));
+			while (true) 
+			{
+				if (isvalid (posi)) 
+				{
+					obstacle.transform.position = posi;
+					break;
+				}
+				posi = new Vector2(Random.Range(0,20),Random.Range(1,18));
+			}
 		}
+
+		/* Obstacle movement for hard mode */
+//		void ObstacleHardMovement(GameObject obstacle)
+//		{
+//			Vector2 ImagePosition = new Vector2 ();
+//
+//		}
 
 		//this method is to find all possibilities of paths after rolling a dice.
 		public Vector2 BFS_Find_Path(int moves, Vector2 startPosition)
@@ -393,3 +418,4 @@ namespace Chimera
         }
     }
 }
+
