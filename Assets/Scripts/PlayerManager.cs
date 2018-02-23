@@ -31,8 +31,7 @@ namespace Chimera
         bool move = false;
         bool aimove = false;
         Vector3 end = new Vector3(10, 17, 0f);
-
-        public int human = 4;
+        public int human = 5;
 
         public GameObject[] GetPlayers()
         {
@@ -60,6 +59,7 @@ namespace Chimera
         {
             setupDice();
 
+            human = 0;
             ring = GameObject.Find("ring");
 
             Pawns = new GameObject[25];
@@ -221,7 +221,7 @@ namespace Chimera
                 moved = Pawns[index].GetComponent<DecisionTree>().Movement(index, moves);
                 Debug.Log("AI Moving pawn");
                 //If on the final tile and can finish (Roll a one or have one left to move)
-                if ((Pawns[index].GetComponent<DecisionTree>().transform.position.x == 10 && Pawns[index].GetComponent<DecisionTree>().transform.position.y == 18) && (moves - moved) == 1)
+                if ((Pawns[index].GetComponent<DecisionTree>().transform.position.x == 10 && Pawns[index].GetComponent<DecisionTree>().transform.position.y == 18))
                 {
                     Pawns[index].GetComponent<DecisionTree>().transform.position = end;
                     removePawn(Pawns[index]);
@@ -284,7 +284,8 @@ namespace Chimera
                     turn = 3;
                 else if (Input.GetKeyDown(KeyCode.Alpha5))
                     turn = 4;
-                else if (Input.GetKeyDown(KeyCode.Space) || Pawns[choosePawn(turn)].GetComponent<DecisionTree>() != null)
+                //else if (Input.GetKeyDown(KeyCode.Space) || Pawns[choosePawn(turn)].GetComponent<DecisionTree>() != null)
+                else if (Input.GetKeyDown(KeyCode.Space))
                 {
 
                     move = true;
