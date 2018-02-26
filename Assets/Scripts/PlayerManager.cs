@@ -14,7 +14,7 @@ namespace Chimera
     public class PlayerManager : MonoBehaviour
     {
         public GameObject[] Players;
-        public GameObject[] Pawns;
+        public static GameObject[] Pawns;
         public bool[] OnObstacles;
         public GameObject dice;
         public GameObject ring;

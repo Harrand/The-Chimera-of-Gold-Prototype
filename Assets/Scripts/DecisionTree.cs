@@ -69,7 +69,7 @@ namespace Chimera
 
 			if (currentObstacle != null) 
 			{
-				ObstacleEasyMovement(currentObstacle);
+				ObstacleHardMovement(currentObstacle);
 			}
 
             return moves;
@@ -91,14 +91,76 @@ namespace Chimera
 		}
 
 		/* Obstacle movement for hard mode */
-//		void ObstacleHardMovement(GameObject obstacle)
-//		{
-//			Vector2 ImagePosition = new Vector2 ();
-//
-//		}
+		void ObstacleHardMovement(GameObject obstacle)
+		{
+            GameObject[] playerPawns = (GameObject[])PlayerManager.Pawns.Clone();
+            Vector2 invalidPosition = new Vector2(-999, -999);
+            Vector2 posi = new Vector2 ();
 
-		//this method is to find all possibilities of paths after rolling a dice.
-		public Vector2 BFS_Find_Path(int moves, Vector2 startPosition)
+            for (int i = 1; i < playerPawns.Length; i++)
+            {
+                GameObject temp = playerPawns[i];
+                if(playerPawns[i].transform.position.y > playerPawns[i - 1].transform.position.y)
+                {
+                    for(int j = 0; j < i; j++)
+                    {
+                        if(playerPawns[i].transform.position.y > playerPawns[j].transform.position.y)
+                        {
+                            temp = playerPawns[j];
+                            playerPawns[j] = playerPawns[i];
+                            playerPawns[i] = temp;
+                        }
+                    }
+                }
+            }
+            for(int k = 0; k < playerPawns.Length; k++)
+            {
+                if (CheckAdjacentObstacles(playerPawns[k]) != invalidPosition)
+                {
+                    posi = CheckAdjacentObstacles(playerPawns[k]);
+                    obstacle.transform.position = posi;
+                    Debug.Log("*********************Position: (" + posi.x + ", " + posi.y);
+                    return;
+                }
+            }
+            Debug.Log("Can't move the obstacle (hard mode)");
+		}
+
+        public Vector2 CheckAdjacentObstacles(GameObject pawn)
+        {
+            GameObject pawnCopy = pawn;
+            Vector2 invalidPosition = new Vector2(-999, -999);
+            Vector2 posi = new Vector2();
+            int[,] dir = new int[8, 2]
+            {
+                {0, 1}, {1, 0},
+                {0, -1}, {-1, 0},
+                {0, 2}, {2, 0},
+                {0, -2}, {-2, 0}
+            };
+            for (int j = 0; j < 8; ++j)
+            {
+                posi.x = (pawnCopy.transform.position.x) + dir[j, 0]; //search the neighbour node 
+                posi.y = (pawnCopy.transform.position.y) + dir[j, 1];
+                if (!ObstacleManager.CheckObstacle((int)posi.x, (int)posi.y) && isvalid(posi))
+                {
+                    return posi;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+                return invalidPosition;
+        }
+
+        /*public Boolean CheckVictim(GameObject pawn)
+        {
+            if()
+        }*/
+
+        //this method is to find all possibilities of paths after rolling a dice.
+        public Vector2 BFS_Find_Path(int moves, Vector2 startPosition)
 		{
             // four direction: up,right,down,left 
             int[,] dir = new int[4, 2]
